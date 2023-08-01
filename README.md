@@ -1,1 +1,1 @@
-# Gaming_Store-Angular
+# Game_Store-Angular
