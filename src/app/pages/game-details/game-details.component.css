@@ -1,0 +1,125 @@
+section .container {
+  width: 95%;
+  margin: auto;
+  padding: 20px 0 10px 0;
+}
+
+section .postArea {
+  background-color: white;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+section .postArea img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+section .postArea h1 {
+  font-weight: bold;
+  font-size: 26px;
+  color: black;
+  margin: 8px 0;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  border-bottom: 3px solid #e0e0e0;
+}
+
+section .postArea h1 a {
+  color: black;
+  font-size: 20px;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+}
+
+section .postArea h2 {
+  margin-bottom: 10px;
+  color: #aaaaaa;
+  font-size: 18px;
+  font-family: "Open Sans", sans-serif;
+  margin-bottom: 30px;
+}
+
+section .postArea h2 a {
+  color: #aaaaaa;
+}
+
+section .postArea h2 a:hover {
+  color: #75dab0;
+}
+
+section .postArea p {
+  font-size: 18px;
+  color: #65656a;
+  margin-bottom: 15px;
+  font-family: "Open Sans", sans-serif;
+  /* TEXT LENGHT
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; */
+}
+section .moreGamesArea {
+  background-color: white;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+section .moreGamesArea h1 {
+  color: #75dab0;
+  border-bottom: 3px solid #e4e4e4;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 10px;
+}
+section .moreGamesArea .postContainer {
+  display: grid;
+  grid-template-columns: 32% 32% 32%;
+  column-gap: 2%;
+}
+/* section .moreGamesArea .post {
+    
+} */
+section .moreGamesArea .post img {
+  width: 100%;
+  border-radius: 10px;
+}
+section .moreGamesArea .post img:hover {
+  opacity: 80%;
+}
+
+section .moreGamesArea .post a {
+  transition: 0.1s ease;
+  color: black;
+}
+section .moreGamesArea .post a:hover {
+  transition: 0.1s ease;
+  color: #75dab0;
+}
+section .moreGamesArea .post a h2 {
+  font-weight: bold;
+}
+
+section .commentsArea {
+  background-color: white;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+section .commentsArea h1 {
+  color: #75dab0;
+  border-bottom: 3px solid #e4e4e4;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  section .container {
+    width: 90%;
+  }
+}

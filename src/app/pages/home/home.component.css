@@ -1,0 +1,16 @@
+header {
+  position: relative;
+  background-color: white;
+  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.3);
+}
+header .navBar ul li a {
+  color: black;
+  text-shadow: none;
+  background-color: blue;
+}
+
+@media screen and (max-width: 1120px) {
+  header .navBar ul li a {
+    color: white;
+  }
+}

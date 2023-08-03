@@ -1,0 +1,42 @@
+<app-main>
+  <section *ngIf="game">
+    <div class="postArea">
+      <div class="container">
+        <h1>{{game.name}}</h1>
+        <h2><i class="fas fa-user"></i><a href="about-me.html"> {{game.creator}} </a> &ensp;<i class="far fa-clock"></i>
+          {{game.date}}</h2>
+        <img src="{{game.image}}" alt="{{game.name}}">
+        <p>{{game.description}}</p>
+      </div>
+    </div>
+    <div class="moreGamesArea">
+      <div class="container">
+        <h1>You may like these posts</h1>
+        <div class="postContainer">
+          <ng-container *ngIf="popularGames.length > 0; else noGames">
+            <div class="post" *ngFor="let game of popularGames">
+              <a [routerLink]="['/game', game.id]"><img src="{{game.image}}"></a>
+              <a [routerLink]="['/game', game.id]">
+                <h2>{{game.name}}</h2>
+              </a>
+            </div>
+          </ng-container>
+          <ng-template #noGames>
+            <div class="noGames">
+              <h2>No Games yet.</h2>
+            </div>
+          </ng-template>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="commentsArea">
+      <div class="container">
+        <h1>Post a Comment</h1>
+      </div>
+    </div>
+
+  </section>
+  <app-aside [popularGames]="popularGames"></app-aside>
+</app-main>

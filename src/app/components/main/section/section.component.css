@@ -1,0 +1,44 @@
+section .container {
+  width: 85%;
+  margin: auto;
+}
+
+section .postArea {
+  display: grid;
+  grid-template-columns: 49% 49%;
+  column-gap: 2%;
+}
+
+section .buttonArea {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  margin-bottom: 20px;
+}
+
+section .buttonArea .btn {
+  padding: 10px;
+  font-size: 16px;
+  color: white;
+  background-color: rgb(99, 202, 159);
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+section .buttonArea .btn:hover {
+  background-color: #1f2024;
+}
+
+.noGames h2 {
+  font-weight: bold;
+  font-size: 30px;
+  font-family: "Open Sans" sans-serif;
+}
+
+@media screen and (max-width: 620px) {
+  section .postArea {
+    grid-template-columns: 100%;
+  }
+}

@@ -1,0 +1,17 @@
+<main>
+  <div class="container">
+    <div class="login-box">
+      <h1 class="formName">Login</h1>
+      <form (ngSubmit)="onSubmit()" #gameForm="ngForm">
+        <label>Email</label>
+        <input type="email" [(ngModel)]="email" name="email" placeholder="" />
+        <label>Password</label>
+        <input type="password" [(ngModel)]="password" name="password" placeholder="" />
+        <button class="submitBtn" type="submit">Login</button>
+      </form>
+      <p class="login-register">
+        Not have an account? <a routerLink="/users/register">Register Here</a>
+      </p>
+    </div>
+  </div>
+</main>
