@@ -22,7 +22,7 @@
         <ng-container *ngIf="authService.user">
           <li><a routerLink="/games/create">✍🏻 Create post</a></li>
           <li><a (click)="signOut()">🚪LogOut</a></li>
-          <li><a routerLink="/users/profile">👨‍💻 My Profile</a></li>
+          <li><a [routerLink]="['/users/profile', authService.getCurrentUserId()]">👨‍💻 My Profile</a></li>
         </ng-container>
         <ng-container *ngIf="!authService.user">
           <li><a routerLink="/users/login">🔑 LogIn</a></li>

@@ -18,13 +18,33 @@ section .postArea img {
 }
 
 section .postArea h1 {
+  display: inline-block;
   font-weight: bold;
   font-size: 26px;
   color: black;
   margin: 8px 0;
-  padding-bottom: 5px;
+}
+section .postArea .options {
+  display: inline-block;
+}
+section .postArea .options a {
+  color: black;
+  transition: none;
+  cursor: pointer;
+}
+section .postArea .options a:hover {
+  color: #75dab0;
+}
+
+section .postArea hr {
+  border: 2px solid #e0e0e0;
+  margin-bottom: 4px;
+}
+
+section .moreGamesArea hr,
+section .commentsArea hr {
+  border: 2px solid #e0e0e0;
   margin-bottom: 10px;
-  border-bottom: 3px solid #e0e0e0;
 }
 
 section .postArea h1 a {
@@ -69,11 +89,9 @@ section .moreGamesArea {
 }
 section .moreGamesArea h1 {
   color: #75dab0;
-  border-bottom: 3px solid #e4e4e4;
   font-size: 22px;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
-  margin-bottom: 10px;
 }
 section .moreGamesArea .postContainer {
   display: grid;
@@ -111,11 +129,9 @@ section .commentsArea {
 }
 section .commentsArea h1 {
   color: #75dab0;
-  border-bottom: 3px solid #e4e4e4;
   font-size: 22px;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
-  margin-bottom: 10px;
 }
 
 @media screen and (max-width: 768px) {

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  user: any  | null = null;
+  user: any | null = null;
   constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router) {
     this.afAuth.authState.subscribe((user) => {
       this.user = user;
@@ -16,11 +16,23 @@ export class AuthService {
 
   async signUp(email: string, password: string, username: string) {
     try {
+      const usernameQuerySnapshot: any = await this.firestore.collection('users', ref => ref.where('username', '==', username)).get().toPromise();
+      const emailQuerySnapshot: any = await this.firestore.collection('users', ref => ref.where('email', '==', email)).get().toPromise();
+
+      if (!usernameQuerySnapshot.empty) {
+        console.error('Bu kullanıcı adı zaten kullanılıyor.');
+        return false;
+      }
+
+      if (!emailQuerySnapshot.empty) {
+        console.error('Bu e-posta adresi zaten kullanılıyor.');
+        return false;
+      }
+
       const authResult = await this.afAuth.createUserWithEmailAndPassword(email, password);
       const user = authResult.user;
-  
+
       if (user) {
-        await user.updateProfile({ displayName: username });
         this.firestore.collection('users').doc(user.uid).set({
           username: username,
           email: email,
@@ -37,9 +49,7 @@ export class AuthService {
 
   async signIn(email: string, password: string) {
     try {
-      const authResult = await this.afAuth.signInWithEmailAndPassword(email, password);
-      console.log(authResult)
-      console.log(await this.afAuth.currentUser)
+      await this.afAuth.signInWithEmailAndPassword(email, password);
       console.log("Login Succresfully Comppleted");
       this.router.navigate(['/']);
       return true;
@@ -52,7 +62,6 @@ export class AuthService {
   async signOut() {
     try {
       await this.afAuth.signOut();
-      console.log(await this.afAuth.currentUser)
       console.log("LogOut Succresfully Comppleted");
       this.router.navigate(['/users/login']);
       return true;
@@ -61,4 +70,21 @@ export class AuthService {
       return false;
     }
   }
+
+  getCurrentUserId(): string | null {
+    if (this.user) {
+      return this.user.uid;
+    } else {
+      return null;
+    }
+  }
+
+  async getCurrentUser(): Promise<any> {
+    return new Promise((resolve) => {
+      this.afAuth.authState.subscribe((user) => {
+        resolve(user);
+      });
+    });
+  }
+
 }

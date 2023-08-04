@@ -30,6 +30,7 @@ import { GameService } from './services/game.service';
 import { SectionComponent } from './components/main/section/section.component';
 import { CreateComponent } from './pages/create/create.component';
 import { GameDetailsComponent } from './pages/game-details/game-details.component';
+import { EditComponent } from './pages/edit/edit.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { GameDetailsComponent } from './pages/game-details/game-details.componen
     ProfileComponent,
     SectionComponent,
     CreateComponent,
-    GameDetailsComponent
+    GameDetailsComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component,HostListener } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -6,8 +6,8 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent  {
-  constructor(public authService: AuthService) {}
+export class HeaderComponent {
+  constructor(public authService: AuthService) { }
 
   @HostListener('click', ['$event.target'])
   onClick(target: HTMLElement) {
@@ -21,7 +21,7 @@ export class HeaderComponent  {
     if (menuBtn) {
       menuBtn.classList.toggle('active');
     }
-  
+
     const navBar = document.querySelector('.navBar') as HTMLElement;
     if (navBar) {
       navBar.classList.toggle('open');
@@ -32,8 +32,8 @@ export class HeaderComponent  {
       }
     }
   }
-  
-  
+
+
   signOut() {
     this.authService.signOut();
   }

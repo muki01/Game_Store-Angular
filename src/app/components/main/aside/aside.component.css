@@ -13,11 +13,9 @@ aside .box .container {
 }
 aside .box h1 {
   color: #75dab0;
-  border-bottom: 3px solid #e4e4e4;
   font-size: 22px;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
-  margin-bottom: 10px;
 }
 
 aside .socialMedia .post {
@@ -31,6 +29,10 @@ aside .socialMedia .post a {
   border-radius: 5px;
   color: white;
   margin-bottom: 5px;
+}
+aside hr {
+  border: 2px solid #e0e0e0;
+  margin-bottom: 10px;
 }
 
 aside .socialMedia .post a i {

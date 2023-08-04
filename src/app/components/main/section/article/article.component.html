@@ -2,7 +2,9 @@
   <a [routerLink]="['/game', game.id]"><img src="{{ game.image }}" alt="{{ game.id }}"></a>
   <div class="container">
     <h1><a [routerLink]="['/game', game.id]">{{ game.name }}</a></h1>
-    <h2><i class="fas fa-user"></i><a routerLink="">{{ game.creator }} </a> &ensp;<i class="far fa-clock"></i>
+    <hr>
+    <h2><i class="fas fa-user"></i><a [routerLink]="['/users/profile', game.creatorId]">{{ userData.username }} </a>
+      &ensp;<i class="far fa-clock"></i>
       {{ game.date }}
     </h2>
     <p>{{ game.description }}</p>

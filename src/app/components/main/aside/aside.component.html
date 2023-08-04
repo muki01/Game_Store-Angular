@@ -2,6 +2,7 @@
   <div class="box socialMedia">
     <div class="container">
       <h1>Social Media</h1>
+      <hr>
       <div class="post">
         <a href=""><i class="fab fa-facebook-f"></i></a>
         <a href=""><i class="fab fa-instagram"></i></a>
@@ -14,6 +15,7 @@
   <div class="box searchBox">
     <div class="container">
       <h1>Search</h1>
+      <hr>
       <div class="post">
         <input placeholder="Search this website" type="text">
         <a routerLink="">Search</a>
@@ -23,6 +25,7 @@
   <div class="box popularPost">
     <div class="container">
       <h1>Popular Games</h1>
+      <hr>
       <ng-container *ngIf="popularGames.length > 0">
         <div *ngFor="let game of popularGames" class="post">
           <a [routerLink]="['/game', game.id]"><img src="{{ game.image }}"></a>
@@ -40,16 +43,20 @@
   <div class="box aboutMe">
     <div class="container">
       <h1>About Me</h1>
-      <div class="post">
-        <img src="../../../../assets/img/profil-logo.jpg">
+      <hr>
+      <div class="post" *ngIf="currentUser">
+        <a [routerLink]="['/users/profile', currentUser.uid]"><img src="../../../../assets/img/user.png"></a>
         <div class="textArea">
-          <a routerLink="about-me.html">
-            <h2>Muksin</h2>
+          <a [routerLink]="['/users/profile', currentUser.uid]">
+            <h2>{{currentUserName}}</h2>
           </a>
-          <a routerLink="about-me.html">
+          <a [routerLink]="['/users/profile', currentUser.uid]">
             <h2>View complete profile</h2>
           </a>
         </div>
+      </div>
+      <div class="notLoggedin" *ngIf="!currentUser">
+        <h2>Not Logged In</h2>
       </div>
     </div>
   </div>

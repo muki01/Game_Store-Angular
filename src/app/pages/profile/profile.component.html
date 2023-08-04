@@ -1,1 +1,5 @@
-<p>{{authService.user.displayName}}</p>
+<div class="profile-container" *ngIf="userProfile">
+  <h1>{{ userProfile.username }}</h1>
+  <p>Email: {{ userProfile.email }}</p>
+  <!-- Diğer kullanıcı bilgileri için ek alanlar eklenebilir -->
+</div>

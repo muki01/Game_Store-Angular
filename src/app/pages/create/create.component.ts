@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { GameService } from '../../services/game.service';
 import { FirebaseService } from '../../services/firebase.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,32 +11,35 @@ import { Router } from '@angular/router';
 })
 
 export class CreateComponent {
-  newGame = {
+  newGame: any = {
     name: '',
     type: '',
     image: '',
     description: '',
-    creator: '',
+    creatorId: '',
     date: ''
   };
 
-  constructor(private firebaseService: FirebaseService,private datePipe: DatePipe,private router: Router) { }
+  constructor(private firebaseService: FirebaseService, private datePipe: DatePipe, private router: Router, private authService: AuthService) { }
 
-  onSubmit() {
-    this.newGame.creator = "Change This";
+  async onSubmit() {
     this.newGame.date = this.getCurrentDate();
-    if (this.newGame.name && this.newGame.type && this.newGame.image && this.newGame.description && this.newGame.creator && this.newGame.date) {
-      this.firebaseService.addGame(this.newGame).then(() => {
+    this.newGame.creatorId = await this.authService.getCurrentUserId();
+
+    if (this.newGame.name && this.newGame.type && this.newGame.image && this.newGame.description && this.newGame.creatorId && this.newGame.date) {
+      const success = await this.firebaseService.addGame(this.newGame);
+      if (success) {
         console.log('Game added successfully.');
-        this.resetForm()
+        this.resetForm();
         this.router.navigate(['/']);
-      }).catch(error => {
-        console.error('Error adding game:', error);
-      });
+      } else {
+        console.error('Error adding game.');
+      }
     } else {
       console.error('Please fill all the fields.');
     }
   }
+
 
   resetForm() {
     this.newGame = {
@@ -44,7 +47,7 @@ export class CreateComponent {
       type: '',
       image: '',
       description: '',
-      creator: '',
+      creatorId: '',
       date: ''
     };
   }

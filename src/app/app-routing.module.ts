@@ -14,6 +14,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { CreateComponent } from './pages/create/create.component';
 import { GameDetailsComponent } from './pages/game-details/game-details.component';
+import { EditComponent } from './pages/edit/edit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,8 +28,9 @@ const routes: Routes = [
   { path: 'users/login', component: LoginComponent },
   { path: 'users/register', component: RegisterComponent },
   { path: 'games/create', component: CreateComponent },
-  { path: 'users/profile', component: ProfileComponent },
+  { path: 'users/profile/:userId', component: ProfileComponent },
   { path: 'game/:id', component: GameDetailsComponent },
+  { path: 'edit/:id', component: EditComponent }
 ];
 
 @NgModule({

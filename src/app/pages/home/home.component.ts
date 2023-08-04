@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
   categorizedGames: any[] = [];
   popularGames: any[] = [];
 
-  constructor(private firebaseService: FirebaseService) {}
+  constructor(private firebaseService: FirebaseService) { }
 
   ngOnInit(): void {
     this.firebaseService.getGames(6).subscribe((games: any[]) => {
@@ -21,7 +21,3 @@ export class HomeComponent implements OnInit {
     });
   }
 }
-
-
-// this.categorizedGames = this.gameService.getRecentGames(6);
-// this.popularGames =  this.gameService.getOldestGames(3);
