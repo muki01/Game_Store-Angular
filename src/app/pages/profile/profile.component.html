@@ -1,5 +1,47 @@
-<div class="profile-container" *ngIf="userProfile">
+<main id="main">
+  <div class="main-container">
+    <div class="sideBar">
+      <div class="sideBar-container" *ngIf="currentUserData">
+        <img src="../../../assets/img/user.png" alt="">
+        <h1>{{ currentUserData.username }}</h1>
+        <h2>{{ currentUserData.email }}</h2>
+        <h2>Balance: {{ currentUserData.balance }}$</h2>
+        <a href="">Profile</a>
+        <hr>
+        <a href="">Settings</a>
+        <hr>
+      </div>
+    </div>
+    <section>
+      <div class="myGamesArea">
+        <h1>Your Games</h1>
+        <hr>
+        <div class="postContainer" *ngIf="yourGames.length>0">
+          <div class="post" *ngFor="let yourGames of yourGames">
+            <a [routerLink]="['/game', yourGames.id]"><img src="{{yourGames.image}}"></a>
+            <a [routerLink]="['/game', yourGames.id]">
+              <h2>{{yourGames.name}}</h2>
+            </a>
+          </div>
+        </div>
+        <div class="noGames" *ngIf="yourGames.length==0">
+          <h2>No Games</h2>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- <div class="profile-container" *ngIf="userProfile">
   <h1>{{ userProfile.username }}</h1>
   <p>Email: {{ userProfile.email }}</p>
-  <!-- Diğer kullanıcı bilgileri için ek alanlar eklenebilir -->
-</div>
+</div> -->
+
+
+
+<!-- <div class="post" *ngFor="let popularGames of popularGames">
+  <a [routerLink]="['/game', popularGames.id]"><img src="{{popularGames.image}}"></a>
+  <a [routerLink]="['/game', popularGames.id]">
+    <h2>{{popularGames.name}}</h2>
+  </a>
+</div> -->

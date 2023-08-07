@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { FirebaseService } from '../../../services/firebase.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-aside',
@@ -8,20 +9,16 @@ import { FirebaseService } from '../../../services/firebase.service';
   styleUrls: ['./aside.component.css']
 })
 export class AsideComponent {
-  currentUser: any | null;
-  currentUserName: any
-  constructor(public authService: AuthService, private firebaseService: FirebaseService) { }
+  currentUserData: any | null;
+  currentUserId: any | null;
 
-  ngOnInit() {
-    this.loadCurrentUser();
-  }
-
-  async loadCurrentUser() {
-    this.currentUser = await this.authService.getCurrentUser();
-    this.firebaseService.getUserById(this.currentUser.uid).subscribe((userData: any) => {
-      this.currentUserName = userData.username;
+  constructor(private afAuth: AngularFireAuth, public authService: AuthService, private firebaseService: FirebaseService) {
+    this.afAuth.authState.subscribe((user) => {
+      this.currentUserId = user?.uid;
+      this.firebaseService.getUserById(this.currentUserId).subscribe((userData: any) => {
+        this.currentUserData = userData;
+      });
     });
-    console.log(this.currentUser)
   }
   @Input() popularGames: any[] = [];
 }

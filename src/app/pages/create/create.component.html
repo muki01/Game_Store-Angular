@@ -20,6 +20,8 @@
         <input type="text" [(ngModel)]="newGame.image" name="image" required placeholder="">
         <label>Description</label>
         <textarea [(ngModel)]="newGame.description" name="description" required></textarea>
+        <label>Price</label>
+        <input type="number" [(ngModel)]="newGame.price" name="price" min="0" required placeholder="">
         <button class="submitBtn" type="submit">Create Game</button>
       </form>
     </div>

@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.firebaseService.getGames(6).subscribe((games: any[]) => {
+      console.log(games)
       this.categorizedGames = games;
     });
     this.firebaseService.getPopularGames(3).subscribe((games: any[]) => {

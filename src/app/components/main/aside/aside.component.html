@@ -42,20 +42,20 @@
   </div>
   <div class="box aboutMe">
     <div class="container">
-      <h1>About Me</h1>
+      <h1>Your Profile</h1>
       <hr>
-      <div class="post" *ngIf="currentUser">
-        <a [routerLink]="['/users/profile', currentUser.uid]"><img src="../../../../assets/img/user.png"></a>
+      <div class="post" *ngIf="currentUserData">
+        <a [routerLink]="['/users/profile', currentUserId]"><img src="../../../../assets/img/user.png"></a>
         <div class="textArea">
-          <a [routerLink]="['/users/profile', currentUser.uid]">
-            <h2>{{currentUserName}}</h2>
+          <a [routerLink]="['/users/profile', currentUserId]">
+            <h2>{{currentUserData.username}}</h2>
           </a>
-          <a [routerLink]="['/users/profile', currentUser.uid]">
+          <a [routerLink]="['/users/profile', currentUserId]">
             <h2>View complete profile</h2>
           </a>
         </div>
       </div>
-      <div class="notLoggedin" *ngIf="!currentUser">
+      <div class="notLoggedin" *ngIf="!currentUserId">
         <h2>Not Logged In</h2>
       </div>
     </div>

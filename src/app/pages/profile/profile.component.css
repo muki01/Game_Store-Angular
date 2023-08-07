@@ -1,0 +1,90 @@
+main {
+  width: 100%;
+  max-width: 1920px;
+  height: auto;
+  margin: auto;
+  margin: 40px 0;
+}
+
+main .main-container {
+  width: 95%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 20% 75%;
+  column-gap: 5%;
+}
+main hr {
+  border: 2px solid #e0e0e0;
+  margin-bottom: 10px;
+}
+
+.sideBar {
+  background-color: white;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+}
+.sideBar-container {
+  padding: 20px;
+}
+.sideBar img {
+  width: 100%;
+}
+.sideBar h1 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+}
+.sideBar h2 {
+  text-align: center;
+}
+.sideBar a {
+  display: block;
+  text-align: center;
+}
+section .myGamesArea {
+  padding: 10px 20px;
+  background-color: white;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.18);
+  border-radius: 10px;
+}
+section .myGamesArea h1 {
+  color: #75dab0;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+}
+section .myGamesArea .postContainer {
+  display: grid;
+  grid-template-columns: 18% 18% 18% 18% 18%;
+  column-gap: 2.5%;
+}
+section .myGamesArea .post {
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.4);
+  margin-bottom: 20px;
+}
+section .myGamesArea .post img {
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+}
+section .myGamesArea .post img:hover {
+  opacity: 80%;
+}
+
+section .myGamesArea .post a {
+  transition: 0.1s ease;
+  color: black;
+  cursor: pointer;
+}
+section .myGamesArea .post a:hover {
+  transition: 0.1s ease;
+  color: #75dab0;
+}
+section .myGamesArea .post a h2 {
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  margin: 10px 20px;
+}

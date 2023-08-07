@@ -19,7 +19,7 @@ export class EditComponent {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      this.gameId = params.get('id');
+      this.gameId = params.get('gameId');
       if (this.gameId) {
         this.firebaseService.getGameById(this.gameId).subscribe((gameData: any) => {
           this.game = gameData;

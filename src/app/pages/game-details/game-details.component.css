@@ -16,16 +16,20 @@ section .postArea img {
   border-radius: 10px;
   margin-bottom: 20px;
 }
-
-section .postArea h1 {
+section .postArea .textArea {
+  display: flex;
+  justify-content: space-between;
+}
+section .postArea .textArea h1 {
   display: inline-block;
   font-weight: bold;
   font-size: 26px;
   color: black;
   margin: 8px 0;
 }
-section .postArea .options {
-  display: inline-block;
+section .postArea .textArea .options {
+  margin: auto 0;
+  margin-left: auto;
 }
 section .postArea .options a {
   color: black;
@@ -75,11 +79,27 @@ section .postArea p {
   color: #65656a;
   margin-bottom: 15px;
   font-family: "Open Sans", sans-serif;
-  /* TEXT LENGHT
-    display: -webkit-box;
-    overflow: hidden;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical; */
+}
+
+section .btnArea {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  margin-bottom: 15px;
+}
+section .btnArea .btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: rgb(99, 202, 159);
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+section .btnArea .btn:hover {
+  background-color: #1f2024;
 }
 section .moreGamesArea {
   background-color: white;

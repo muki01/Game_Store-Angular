@@ -13,7 +13,7 @@ export class ArticleComponent {
 
   ngOnInit(): void {
     this.firebaseService.getUserById(this.game.creatorId).subscribe((userData: any) => {
-      this.userData = userData;
+      this.userData = userData
     });
   }
 }

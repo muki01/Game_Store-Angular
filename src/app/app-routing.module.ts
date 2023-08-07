@@ -29,8 +29,8 @@ const routes: Routes = [
   { path: 'users/register', component: RegisterComponent },
   { path: 'games/create', component: CreateComponent },
   { path: 'users/profile/:userId', component: ProfileComponent },
-  { path: 'game/:id', component: GameDetailsComponent },
-  { path: 'edit/:id', component: EditComponent }
+  { path: 'game/:gameId', component: GameDetailsComponent },
+  { path: 'edit/:gameId', component: EditComponent }
 ];
 
 @NgModule({

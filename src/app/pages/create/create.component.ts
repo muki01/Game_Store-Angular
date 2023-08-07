@@ -16,6 +16,7 @@ export class CreateComponent {
     type: '',
     image: '',
     description: '',
+    price: '',
     creatorId: '',
     date: ''
   };
@@ -24,9 +25,9 @@ export class CreateComponent {
 
   async onSubmit() {
     this.newGame.date = this.getCurrentDate();
-    this.newGame.creatorId = await this.authService.getCurrentUserId();
+    this.newGame.creatorId = this.authService.currentUserId;
 
-    if (this.newGame.name && this.newGame.type && this.newGame.image && this.newGame.description && this.newGame.creatorId && this.newGame.date) {
+    if (this.newGame.name && this.newGame.type && this.newGame.image && this.newGame.description && this.newGame.creatorId && this.newGame.date && this.newGame.price) {
       const success = await this.firebaseService.addGame(this.newGame);
       if (success) {
         console.log('Game added successfully.');
@@ -58,29 +59,3 @@ export class CreateComponent {
     return formattedDate || '';
   }
 }
-
-
-
-
-
-
-
-
-// export class CreateComponent {
-//   newGame: any = {};
-//   constructor(private gameService: GameService,private datePipe: DatePipe) {}
-
-//   addGame(): void {
-//     this.newGame.creator = "Change This";
-//     this.newGame.date = this.getCurrentDate();
-//     this.gameService.addGame(this.newGame);
-//     this.newGame = {};
-//   }
-
-//   getCurrentDate(): string {
-//     const currentDate = new Date();
-//     const formattedDate = this.datePipe.transform(currentDate, 'MMMM d, y');
-//     console.log(formattedDate)
-//     return formattedDate || '';
-//   }
-// }

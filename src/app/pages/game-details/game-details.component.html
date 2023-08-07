@@ -2,17 +2,26 @@
   <section *ngIf="gameData">
     <div class="postArea">
       <div class="container">
-        <h1>{{gameData.name}}</h1>
-        <div class="options">
-          <a (click)="editGame()"> <i class="fa-solid fa-pencil"></i> Edit </a>
-          <a (click)="deleteGame()"><i class="fa-solid fa-trash-can"></i> Remove </a>
+        <div class="textArea">
+          <h1>{{gameData.name}}</h1>
+          <div class="options">
+            <a (click)="editGame()"> <i class="fa-solid fa-pencil"></i> Edit </a>
+            <a (click)="deleteGame()"><i class="fa-solid fa-trash-can"></i> Remove </a>
+          </div>
         </div>
         <hr>
-        <h2><i class="fas fa-user"></i><a [routerLink]="['/users/profile', gameData.creatorId]"> {{userData.username}}
-          </a> &ensp;<i class="far fa-clock"></i>
+        <h2><i class="fas fa-user"></i><a [routerLink]="['/users/profile', gameData.creatorId]">
+            {{creatorUserData.username}}
+          </a><i class="far fa-clock"></i>
           {{gameData.date}}</h2>
         <img src="{{gameData.image}}" alt="{{gameData.name}}">
         <p>{{gameData.description}}</p>
+        <div class="btnArea">
+          <button *ngIf="!gamePurchased" (click)="buyGame()" class="btn"><i class="fa-regular fa-credit-card"></i>
+            {{gameData.price}}$ Buy
+            Now</button>
+          <h2 *ngIf="gamePurchased">You purchased this game!</h2>
+        </div>
       </div>
     </div>
     <div class="moreGamesArea">

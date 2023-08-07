@@ -3,8 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore/'; 
-import { AngularFireAuthModule } from '@angular/fire/compat/auth'; 
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore/';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,7 +26,6 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
-import { GameService } from './services/game.service';
 import { SectionComponent } from './components/main/section/section.component';
 import { CreateComponent } from './pages/create/create.component';
 import { GameDetailsComponent } from './pages/game-details/game-details.component';
@@ -73,7 +72,7 @@ import { EditComponent } from './pages/edit/edit.component';
     AngularFirestoreModule,
     AngularFireAuthModule,
   ],
-  providers: [GameService,DatePipe],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

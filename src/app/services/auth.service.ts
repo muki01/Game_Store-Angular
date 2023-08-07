@@ -7,10 +7,10 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  user: any | null = null;
+  currentUserId: any | null = null;
   constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router) {
     this.afAuth.authState.subscribe((user) => {
-      this.user = user;
+      this.currentUserId = user?.uid;
     });
   }
 
@@ -36,6 +36,8 @@ export class AuthService {
         this.firestore.collection('users').doc(user.uid).set({
           username: username,
           email: email,
+          balance: 200,
+          yourgames: [],
         });
       }
       console.log("Registration Succresfully Comppleted");
@@ -69,22 +71,6 @@ export class AuthService {
       console.error('Çıkış sırasında bir hata oluştu:', error);
       return false;
     }
-  }
-
-  getCurrentUserId(): string | null {
-    if (this.user) {
-      return this.user.uid;
-    } else {
-      return null;
-    }
-  }
-
-  async getCurrentUser(): Promise<any> {
-    return new Promise((resolve) => {
-      this.afAuth.authState.subscribe((user) => {
-        resolve(user);
-      });
-    });
   }
 
 }
