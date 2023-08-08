@@ -15,6 +15,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { CreateComponent } from './pages/create/create.component';
 import { GameDetailsComponent } from './pages/game-details/game-details.component';
 import { EditComponent } from './pages/edit/edit.component';
+import { SearchComponent } from './pages/search/search.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -30,7 +32,9 @@ const routes: Routes = [
   { path: 'games/create', component: CreateComponent },
   { path: 'users/profile/:userId', component: ProfileComponent },
   { path: 'game/:gameId', component: GameDetailsComponent },
-  { path: 'edit/:gameId', component: EditComponent }
+  { path: 'edit/:gameId', component: EditComponent },
+  { path: 'search', component: SearchComponent },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

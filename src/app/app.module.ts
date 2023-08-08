@@ -30,6 +30,8 @@ import { SectionComponent } from './components/main/section/section.component';
 import { CreateComponent } from './pages/create/create.component';
 import { GameDetailsComponent } from './pages/game-details/game-details.component';
 import { EditComponent } from './pages/edit/edit.component';
+import { SearchComponent } from './pages/search/search.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { EditComponent } from './pages/edit/edit.component';
     SectionComponent,
     CreateComponent,
     GameDetailsComponent,
-    EditComponent
+    EditComponent,
+    SearchComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

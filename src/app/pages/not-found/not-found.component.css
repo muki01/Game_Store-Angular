@@ -1,0 +1,15 @@
+main {
+  height: 750px;
+  display: flex;
+  background: url("../../../assets/img/bg-notFound.png");
+  background-size: cover;
+  background-position: center;
+}
+.notFound {
+  margin: auto;
+  text-align: center;
+}
+.notFound h1 {
+  font-size: 150px;
+  font-weight: bold;
+}

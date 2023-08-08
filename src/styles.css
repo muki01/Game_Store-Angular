@@ -11,4 +11,9 @@
 
 body {
   background-color: #f8f8f8;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }

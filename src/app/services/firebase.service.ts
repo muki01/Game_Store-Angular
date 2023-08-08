@@ -118,4 +118,17 @@ export class FirebaseService {
       console.error('Error adding game to your games:', error);
     }
   }
+
+  searchGames(searchText: string) {
+    return this.firestore.collection('games', ref => ref.where('name', '>=', searchText).where('name', '<=', searchText + '\uf8ff')).snapshotChanges()
+      .pipe(
+        map(actions => {
+          return actions.map(action => {
+            const id = action.payload.doc.id;
+            const data: any = action.payload.doc.data();
+            return { id, ...data };
+          });
+        })
+      );
+  }
 }

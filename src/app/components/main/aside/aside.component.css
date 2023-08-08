@@ -85,6 +85,7 @@ aside .searchBox .post a {
   border-radius: 0 5px 5px 0;
   background-color: #75dab0;
   color: white;
+  cursor: pointer;
 }
 
 aside .searchBox .post a:hover {
@@ -110,7 +111,7 @@ aside .popularPost .post img:hover {
 
 aside .popularPost .post h2 {
   color: black;
-  font-size: 14px;
+  font-size: 18px;
   font-family: "Poppins", sans-serif;
   font-weight: bold;
 }
@@ -135,13 +136,21 @@ aside .aboutMe .post img:hover {
 }
 
 aside .aboutMe .post h2 {
+  display: inline-block;
   color: black;
-  font-size: 16px;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+}
+aside .aboutMe .post h3 {
+  color: black;
+  font-size: 14px;
   font-weight: bold;
   font-family: "Open Sans", sans-serif;
 }
 
-aside .aboutMe .post h2:hover {
+aside .aboutMe .post h2:hover,
+aside .aboutMe .post h3:hover {
   color: #75dab0;
 }
 

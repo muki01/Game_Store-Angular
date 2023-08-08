@@ -28,6 +28,7 @@ main hr {
 }
 .sideBar img {
   width: 100%;
+  border-radius: 50%;
 }
 .sideBar h1 {
   text-align: center;

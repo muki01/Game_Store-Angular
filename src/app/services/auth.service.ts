@@ -38,6 +38,7 @@ export class AuthService {
           email: email,
           balance: 200,
           yourgames: [],
+          image: "https://img.freepik.com/free-icon/user_318-159711.jpg?w=2000",
         });
       }
       console.log("Registration Succresfully Comppleted");

@@ -2,7 +2,7 @@
   <div class="main-container">
     <div class="sideBar">
       <div class="sideBar-container" *ngIf="currentUserData">
-        <img src="../../../assets/img/user.png" alt="">
+        <img src="{{currentUserData.image}}" alt="">
         <h1>{{ currentUserData.username }}</h1>
         <h2>{{ currentUserData.email }}</h2>
         <h2>Balance: {{ currentUserData.balance }}$</h2>
