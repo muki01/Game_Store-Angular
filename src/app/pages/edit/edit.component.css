@@ -3,17 +3,17 @@ main {
   height: auto;
   font-family: "Roboto", sans-serif;
   background: radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("../../../assets/img/Wallpapers/Gif.gif");
+    url("../../../assets/Wallpapers/Gif.gif");
   background-size: cover;
   background-position: center;
 }
-main .container {
+main .main-container {
   margin: auto;
   padding: 60px 0;
 }
 .create-box {
   padding: 20px 0px;
-  width: 400px;
+  width: 500px;
   height: auto;
   margin: auto;
   background-color: white;
@@ -103,4 +103,10 @@ textarea {
   padding: 5px;
   border: 1px solid gray;
   border-radius: 6px;
+}
+
+@media screen and (max-width: 560px) {
+  .create-box {
+    width: 350px;
+  }
 }

@@ -1,3 +1,19 @@
+main {
+  width: 100%;
+  max-width: 1920px;
+  height: auto;
+  margin: auto;
+  margin-top: 40px;
+}
+
+main .main-container {
+  width: 85%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 70% 25%;
+  column-gap: 5%;
+}
+
 section .container {
   width: 95%;
   margin: auto;
@@ -101,6 +117,10 @@ section .btnArea .btn {
 section .btnArea .btn:hover {
   background-color: #1f2024;
 }
+
+section .downloadArea {
+  text-align: center;
+}
 section .moreGamesArea {
   background-color: white;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.18);
@@ -153,8 +173,15 @@ section .commentsArea h1 {
   font-weight: bold;
   font-family: "Poppins", sans-serif;
 }
-
+@media screen and (max-width: 1120px) {
+  main .main-container {
+    width: 95%;
+  }
+}
 @media screen and (max-width: 768px) {
+  main .main-container {
+    grid-template-columns: 100%;
+  }
   section .container {
     width: 90%;
   }

@@ -1,7 +1,7 @@
 <header>
   <div class="container">
     <div class="logoArea">
-      <a routerLink="/" class="image"><img src="../../../assets/img/logo2.png"></a>
+      <a routerLink="/" class="image"><img src="../../../assets/logo.png"></a>
       <a routerLink="/" class="siteName">
         <h1><span class="highlight">Game</span> Store</h1>
       </a>
@@ -19,12 +19,13 @@
         <li><a routerLink="/games/sports">⚽Sports</a></li>
         <li><a routerLink="/games/racing">🚗Racing</a></li>
         <li><a routerLink="/games/horror">💀Horror</a></li>
-        <ng-container *ngIf="authService.currentUserId">
-          <li><a routerLink="/games/create">✍🏻 Create post</a></li>
+        <ng-container *ngIf="currentUserId">
+          <li *ngIf="currentUserData && currentUserData.role == 'admin'"><a routerLink="/games/create">✍🏻
+              Create post</a></li>
           <li><a (click)="signOut()">🚪LogOut</a></li>
-          <li><a [routerLink]="['/users/profile', authService.currentUserId]">👨‍💻 My Profile</a></li>
+          <li><a [routerLink]="['/users/profile', currentUserId]">👨‍💻 My Profile</a></li>
         </ng-container>
-        <ng-container *ngIf="!authService.currentUserId">
+        <ng-container *ngIf="!currentUserId">
           <li><a routerLink="/users/login">🔑 LogIn</a></li>
           <li><a routerLink="/users/register">✍🏻 Register</a></li>
         </ng-container>

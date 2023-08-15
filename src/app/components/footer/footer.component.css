@@ -4,7 +4,7 @@ footer {
   background-color: #1f2024;
 }
 
-footer .navBar {
+/* footer .navBar {
   padding: 20px 0 10px 0;
   text-align: center;
 }
@@ -22,13 +22,13 @@ footer .navBar li a {
 
 footer .navBar li a:hover {
   color: #0ee6af;
-}
+} */
 
 footer .textArea {
   display: flex;
   justify-content: center;
   text-align: center;
-  padding: 10px 0 30px 0;
+  padding: 30px 0;
 }
 
 footer .textArea h1 {

@@ -36,9 +36,11 @@ export class AuthService {
         this.firestore.collection('users').doc(user.uid).set({
           username: username,
           email: email,
+          role: "user",
           balance: 200,
-          yourgames: [],
+          purchasedGames: [],
           image: "https://img.freepik.com/free-icon/user_318-159711.jpg?w=2000",
+          title: "",
         });
       }
       console.log("Registration Succresfully Comppleted");

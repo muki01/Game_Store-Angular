@@ -8,28 +8,24 @@ import { FirebaseService } from '../../services/firebase.service';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent {
-  game: any = {};
+  gameData: any = {};
   gameId: any;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private firebaseService: FirebaseService
-  ) { }
+  constructor(private route: ActivatedRoute, private router: Router, private firebaseService: FirebaseService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
       this.gameId = params.get('gameId');
       if (this.gameId) {
         this.firebaseService.getGameById(this.gameId).subscribe((gameData: any) => {
-          this.game = gameData;
+          this.gameData = gameData;
         });
       }
     });
   }
 
   saveGame() {
-    this.firebaseService.updateGame(this.game, this.gameId).then(() => {
+    this.firebaseService.updateGame(this.gameData, this.gameId).then(() => {
       this.router.navigate(['/game', this.gameId]);
     });
   }

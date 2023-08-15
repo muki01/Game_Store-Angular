@@ -18,16 +18,17 @@ export class CreateComponent {
     description: '',
     price: '',
     creatorId: '',
-    date: ''
+    date: new Date(),
+    downloadURL: ''
   };
 
   constructor(private firebaseService: FirebaseService, private datePipe: DatePipe, private router: Router, private authService: AuthService) { }
 
   async onSubmit() {
-    this.newGame.date = this.getCurrentDate();
+    // this.newGame.date = this.getCurrentDate();
     this.newGame.creatorId = this.authService.currentUserId;
 
-    if (this.newGame.name && this.newGame.type && this.newGame.image && this.newGame.description && this.newGame.creatorId && this.newGame.date && this.newGame.price) {
+    if (this.newGame.name && this.newGame.type && this.newGame.image && this.newGame.description && this.newGame.creatorId && this.newGame.date && this.newGame.price && this.newGame.downloadURL) {
       const success = await this.firebaseService.addGame(this.newGame);
       if (success) {
         console.log('Game added successfully.');
@@ -48,8 +49,10 @@ export class CreateComponent {
       type: '',
       image: '',
       description: '',
+      price: '',
       creatorId: '',
-      date: ''
+      date: '',
+      downloadURL: ''
     };
   }
 

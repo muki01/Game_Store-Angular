@@ -10,10 +10,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { MainComponent } from './components/main/main.component';
 import { BannerComponent } from './components/banner/banner.component';
-import { ArticleComponent } from './components/main/section/article/article.component';
-import { AsideComponent } from './components/main/aside/aside.component';
+import { ArticleComponent } from './components/section/article/article.component';
+import { AsideComponent } from './components/aside/aside.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ActionComponent } from './pages/action/action.component';
 import { AdventureComponent } from './pages/adventure/adventure.component';
@@ -26,19 +25,20 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
-import { SectionComponent } from './components/main/section/section.component';
+import { SectionComponent } from './components/section/section.component';
 import { CreateComponent } from './pages/create/create.component';
 import { GameDetailsComponent } from './pages/game-details/game-details.component';
 import { EditComponent } from './pages/edit/edit.component';
 import { SearchComponent } from './pages/search/search.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
+import { environment } from '../environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    MainComponent,
     BannerComponent,
     ArticleComponent,
     AsideComponent,
@@ -64,15 +64,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    AngularFireModule.initializeApp({
-      apiKey: "AIzaSyD5BDXxV3lFY9vt4BLHsuOLSbvXjQ8RwDk",
-      authDomain: "db-for-project-923e8.firebaseapp.com",
-      projectId: "db-for-project-923e8",
-      storageBucket: "db-for-project-923e8.appspot.com",
-      messagingSenderId: "646171514046",
-      appId: "1:646171514046:web:5e85cd53089e67e46fbaef",
-      measurementId: "G-CNBQFKKZW9"
-    }),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
   ],

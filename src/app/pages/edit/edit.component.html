@@ -1,12 +1,12 @@
 <main>
-  <div class="container">
+  <div class="main-container">
     <div class="create-box">
       <h1 class="formName">Edit Game</h1>
       <form (ngSubmit)="saveGame()" #gameForm="ngForm">
         <label>Name</label>
-        <input type="text" [(ngModel)]="game.name" name="name" required placeholder="" />
+        <input type="text" [(ngModel)]="gameData.name" name="name" required />
         <label>Game Type</label>
-        <select name="type" [(ngModel)]="game.type" required>
+        <select name="type" [(ngModel)]="gameData.type" required>
           <option disabled selected value="">Select Game Type</option>
           <option value="action">Action</option>
           <option value="adventure">Adventure</option>
@@ -17,11 +17,13 @@
           <option value="horror">Horror</option>
         </select>
         <label>Image URL</label>
-        <input type="text" [(ngModel)]="game.image" name="image" required placeholder="">
+        <input type="text" [(ngModel)]="gameData.image" name="image" required>
         <label>Description</label>
-        <textarea [(ngModel)]="game.description" name="description" required></textarea>
+        <textarea [(ngModel)]="gameData.description" name="description" required></textarea>
         <label>Price</label>
-        <input type="number" [(ngModel)]="game.price" name="price" min="0" required placeholder="">
+        <input type="number" [(ngModel)]="gameData.price" name="price" min="0" required>
+        <label>Download URL</label>
+        <input type="text" [(ngModel)]="gameData.downloadURL" name="downloadURL" required>
         <button class="submitBtn" type="submit">Edit Game</button>
       </form>
     </div>

@@ -5,7 +5,7 @@
     <hr>
     <h2><i class="fas fa-user"></i><a [routerLink]="['/users/profile', game.creatorId]">{{ userData.username }} </a>
       &ensp;<i class="far fa-clock"></i>
-      {{ game.date }}
+      {{ game.date.toDate() | date:'MMMM, dd yyyy' }}
     </h2>
     <p>{{ game.description }}</p>
   </div>

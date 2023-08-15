@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FirebaseService } from '../../services/firebase.service'
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-profile',
@@ -9,21 +9,33 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent {
-  currentUserData: any | null = null;
-  yourGames: any[] = [];
+  profileData: any | null = null;
+  profileId: any | null = null;
+  currentUserId: any | null = null;
+  purchasedGames: any[] = [];
+  notYourProfile: boolean = false
 
   constructor(private afAuth: AngularFireAuth, private firebaseService: FirebaseService, private route: ActivatedRoute,) {
-    this.route.paramMap.subscribe((params) => {
-      const userId: any = params.get('userId');
-      console.log(userId)
-      if (userId) {
-        this.firebaseService.getUserById(userId).subscribe((userData: any) => {
-          this.currentUserData = userData;
-        });
-        this.firebaseService.getYourGames(userId).subscribe((games: any) => {
-          this.yourGames = games;
-        });
-      }
-    });
+    this.afAuth.authState.subscribe((user) => {
+      this.currentUserId = user?.uid;
+      this.route.paramMap.subscribe((params) => {
+        this.profileId = params.get('userId');
+        if (this.profileId) {
+          if (this.profileId != this.currentUserId) {
+            this.notYourProfile = true
+          }
+          this.firebaseService.getUserById(this.profileId).subscribe((userData: any) => {
+            this.profileData = userData;
+          });
+          this.firebaseService.getPurchasedGames(this.profileId).subscribe((games: any) => {
+            this.purchasedGames = games;
+          });
+        }
+      });
+    })
+  }
+
+  saveSettings() {
+    this.firebaseService.updateUser(this.profileData, this.profileId)
   }
 }

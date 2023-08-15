@@ -1,16 +1,16 @@
 <main>
-  <div class="container">
+  <div class="main-container">
     <div class="signup-box">
       <h1 class="formName">Register</h1>
       <form (ngSubmit)="onSubmit()" #gameForm="ngForm">
         <label>Username</label>
-        <input type="text" [(ngModel)]="username" name="username" required placeholder="" />
+        <input type="text" [(ngModel)]="username" name="username" required />
         <label>Email</label>
-        <input type="email" [(ngModel)]="email" name="email" required placeholder="" />
+        <input type="email" [(ngModel)]="email" name="email" required />
         <label>Password</label>
-        <input type="password" [(ngModel)]="password" name="password" minlength="6" required placeholder="" />
+        <input type="password" [(ngModel)]="password" name="password" minlength="6" required />
         <label>Confirm Password</label>
-        <input type="password" [(ngModel)]="repassword" name="repeatPassword" minlength="6" required placeholder="" />
+        <input type="password" [(ngModel)]="repassword" name="repeatPassword" minlength="6" required />
         <button class="submitBtn" type="submit">Register</button>
       </form>
       <p class="login-register">

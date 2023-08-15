@@ -1,5 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +9,16 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(public authService: AuthService) { }
+  currentUserData: any | null;
+  currentUserId: any | null;
+  constructor(private afAuth: AngularFireAuth, public authService: AuthService, private firebaseService: FirebaseService) {
+    this.afAuth.authState.subscribe((user) => {
+      this.currentUserId = user?.uid;
+      this.firebaseService.getUserById(this.currentUserId).subscribe((userData: any) => {
+        this.currentUserData = userData;
+      });
+    });
+  }
 
   @HostListener('click', ['$event.target'])
   onClick(target: HTMLElement) {

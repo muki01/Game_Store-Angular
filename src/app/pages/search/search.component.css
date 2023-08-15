@@ -1,0 +1,27 @@
+main {
+  width: 100%;
+  max-width: 1920px;
+  height: auto;
+  margin: auto;
+  margin-top: 40px;
+}
+
+main .main-container {
+  width: 85%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 70% 25%;
+  column-gap: 5%;
+}
+
+@media screen and (max-width: 1120px) {
+  main .main-container {
+    width: 95%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  main .main-container {
+    grid-template-columns: 100%;
+  }
+}

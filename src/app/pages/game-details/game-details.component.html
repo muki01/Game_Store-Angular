@@ -1,59 +1,64 @@
-<app-main>
-  <section *ngIf="gameData">
-    <div class="postArea">
-      <div class="container">
-        <div class="textArea">
-          <h1>{{gameData.name}}</h1>
-          <div class="options">
-            <a (click)="editGame()"> <i class="fa-solid fa-pencil"></i> Edit </a>
-            <a (click)="deleteGame()"><i class="fa-solid fa-trash-can"></i> Remove </a>
+<main id="main">
+  <div class="main-container">
+    <section *ngIf="gameData">
+      <div class="postArea">
+        <div class="container">
+          <div class="textArea">
+            <h1>{{gameData.name}}</h1>
+            <div class="options" *ngIf="currentUserData && currentUserData.role == 'admin'">
+              <a (click)="editGame()"> <i class="fa-solid fa-pencil"></i> Edit </a>
+              <a (click)="deleteGame()"><i class="fa-solid fa-trash-can"></i> Remove </a>
+            </div>
+          </div>
+          <hr>
+          <h2><i class="fas fa-user"></i><a [routerLink]="['/users/profile', gameData.creatorId]">
+              {{creatorUserData.username}}
+            </a><i class="far fa-clock"></i>
+            {{gameData.date.toDate() | date:'MMMM, dd yyyy'}}</h2>
+          <img src="{{gameData.image}}" alt="{{gameData.name}}">
+          <p>{{gameData.description}}</p>
+          <div class="btnArea">
+            <button *ngIf="!gamePurchased" (click)="buyGame()" class="btn"><i class="fa-regular fa-credit-card"></i>
+              {{gameData.price}}$ Buy
+              Now</button>
+            <div class="downloadArea" *ngIf="gamePurchased">
+              <h2>You purchased this game!</h2>
+              <a href="{{gameData.downloadURL}}" class="btn"><i class="fa-solid fa-download"></i> Download</a>
+            </div>
           </div>
         </div>
-        <hr>
-        <h2><i class="fas fa-user"></i><a [routerLink]="['/users/profile', gameData.creatorId]">
-            {{creatorUserData.username}}
-          </a><i class="far fa-clock"></i>
-          {{gameData.date}}</h2>
-        <img src="{{gameData.image}}" alt="{{gameData.name}}">
-        <p>{{gameData.description}}</p>
-        <div class="btnArea">
-          <button *ngIf="!gamePurchased" (click)="buyGame()" class="btn"><i class="fa-regular fa-credit-card"></i>
-            {{gameData.price}}$ Buy
-            Now</button>
-          <h2 *ngIf="gamePurchased">You purchased this game!</h2>
-        </div>
       </div>
-    </div>
-    <div class="moreGamesArea">
-      <div class="container">
-        <h1>You may like these posts</h1>
-        <hr>
-        <div class="postContainer">
-          <ng-container *ngIf="popularGames.length > 0; else noGames">
-            <div class="post" *ngFor="let popularGames of popularGames">
-              <a [routerLink]="['/game', popularGames.id]"><img src="{{popularGames.image}}"></a>
-              <a [routerLink]="['/game', popularGames.id]">
-                <h2>{{popularGames.name}}</h2>
-              </a>
-            </div>
-          </ng-container>
-          <ng-template #noGames>
-            <div class="noGames">
-              <h2>No Games yet.</h2>
-            </div>
-          </ng-template>
+      <div class="moreGamesArea">
+        <div class="container">
+          <h1>You may like these posts</h1>
+          <hr>
+          <div class="postContainer">
+            <ng-container *ngIf="randomGames.length > 0; else noGames">
+              <div class="post" *ngFor="let randomGames of randomGames">
+                <a [routerLink]="['/game', randomGames.id]"><img src="{{randomGames.image}}"></a>
+                <a [routerLink]="['/game', randomGames.id]">
+                  <h2>{{randomGames.name}}</h2>
+                </a>
+              </div>
+            </ng-container>
+            <ng-template #noGames>
+              <div class="noGames">
+                <h2>No Games yet.</h2>
+              </div>
+            </ng-template>
+          </div>
+
         </div>
 
       </div>
-
-    </div>
-    <div class="commentsArea">
-      <div class="container">
-        <h1>Post a Comment</h1>
-        <hr>
+      <div class="commentsArea">
+        <div class="container">
+          <h1>Post a Comment</h1>
+          <hr>
+        </div>
       </div>
-    </div>
 
-  </section>
-  <app-aside [popularGames]="popularGames"></app-aside>
-</app-main>
+    </section>
+    <app-aside [popularGames]="popularGames"></app-aside>
+  </div>
+</main>

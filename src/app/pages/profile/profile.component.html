@@ -1,32 +1,48 @@
 <main id="main">
   <div class="main-container">
     <div class="sideBar">
-      <div class="sideBar-container" *ngIf="currentUserData">
-        <img src="{{currentUserData.image}}" alt="">
-        <h1>{{ currentUserData.username }}</h1>
-        <h2>{{ currentUserData.email }}</h2>
-        <h2>Balance: {{ currentUserData.balance }}$</h2>
-        <a href="">Profile</a>
-        <hr>
-        <a href="">Settings</a>
-        <hr>
+      <div class="sideBar-container" *ngIf="profileData">
+        <img src="{{profileData.image}}" alt="">
+        <h1>{{ profileData.username }}</h1>
+        <h2>{{ profileData.email}}</h2>
+        <h2 *ngIf="notYourProfile == false">💵Balance: {{profileData.balance}}$</h2>
+        <p>{{profileData.title}}</p>
       </div>
     </div>
     <section>
       <div class="myGamesArea">
-        <h1>Your Games</h1>
+        <h1>Purchased Games</h1>
         <hr>
-        <div class="postContainer" *ngIf="yourGames.length>0">
-          <div class="post" *ngFor="let yourGames of yourGames">
-            <a [routerLink]="['/game', yourGames.id]"><img src="{{yourGames.image}}"></a>
-            <a [routerLink]="['/game', yourGames.id]">
-              <h2>{{yourGames.name}}</h2>
+        <div class="postContainer" *ngIf="purchasedGames.length>0">
+          <div class="post" *ngFor="let purchasedGames of purchasedGames">
+            <a [routerLink]="['/game', purchasedGames.id]"><img src="{{purchasedGames.image}}"></a>
+            <a [routerLink]="['/game', purchasedGames.id]">
+              <h2>{{purchasedGames.name}}</h2>
             </a>
           </div>
         </div>
-        <div class="noGames" *ngIf="yourGames.length==0">
+        <div class="noGames" *ngIf="purchasedGames.length==0">
           <h2>No Games</h2>
         </div>
+      </div>
+      <div class="settingsArea" *ngIf="notYourProfile == false">
+        <h1>Settings</h1>
+        <hr>
+        <form (ngSubmit)="saveSettings()" #settingsForm="ngForm" *ngIf="profileData">
+          <div class="row">
+            <h2>Username: </h2>
+            <input type="text" [(ngModel)]="profileData.username" name="username">
+          </div>
+          <div class="row">
+            <h2>Profile Photo: </h2>
+            <input type="text" [(ngModel)]="profileData.image" name="image">
+          </div>
+          <div class="row">
+            <h2>Profile Title: </h2>
+            <textarea [(ngModel)]="profileData.title" name="title"></textarea>
+          </div>
+          <button class="submitBtn" type="submit">Save Changes</button>
+        </form>
       </div>
     </section>
   </div>
