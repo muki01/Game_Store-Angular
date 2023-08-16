@@ -25,12 +25,12 @@ export class AuthService {
       const emailQuerySnapshot: any = await this.firestore.collection('users', ref => ref.where('email', '==', email)).get().toPromise();
 
       if (!usernameQuerySnapshot.empty) {
-        console.error('Bu kullanıcı adı zaten kullanılıyor.');
+        console.error('This username is already in use.');
         return false;
       }
 
       if (!emailQuerySnapshot.empty) {
-        console.error('Bu e-posta adresi zaten kullanılıyor.');
+        console.error('This email address is already in use.');
         return false;
       }
 
@@ -52,7 +52,7 @@ export class AuthService {
       this.router.navigate(['/']);
       return true;
     } catch (error) {
-      console.error('Kayıt sırasında bir hata oluştu:', error);
+      console.error('An error occurred during registration:', error);
       return false;
     }
   }
@@ -64,7 +64,7 @@ export class AuthService {
       this.router.navigate(['/']);
       return true;
     } catch (error) {
-      console.error('Giriş sırasında bir hata oluştu:', error);
+      console.error('An error occurred during login:', error);
       return false;
     }
   }
@@ -72,11 +72,11 @@ export class AuthService {
   async signOut() {
     try {
       await this.afAuth.signOut();
-      console.log("LogOut Succresfully Comppleted");
+      console.log("Logout Succresfully Comppleted");
       this.router.navigate(['/users/login']);
       return true;
     } catch (error) {
-      console.error('Çıkış sırasında bir hata oluştu:', error);
+      console.error('An error occurred while Logout:', error);
       return false;
     }
   }

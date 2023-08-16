@@ -33,8 +33,6 @@ export class GameDetailsComponent {
               this.creatorUserData = userData;
               this.checkGamePurchased();
             });
-          } else {
-            console.error("Geçerli bir oyun bulunamadı.");
           }
         });
       }
@@ -53,7 +51,7 @@ export class GameDetailsComponent {
     if (this.gameData && this.gameId) {
       this.router.navigate(['/edit', this.gameId]);
     } else {
-      console.error("Oyun kimliği eksik veya tanımlanmamış.");
+      console.error("Game ID is missing or undefined.");
     }
   }
 
@@ -71,15 +69,15 @@ export class GameDetailsComponent {
 
       if (userBalance >= gamePrice) {
         const updatedBalance = userBalance - gamePrice;
-        this.firebaseService.updateBalance(updatedBalance)
+        this.firebaseService.updateBalance(this.loggedUserData.userId, updatedBalance)
         this.firebaseService.addToPurchasedGames(this.loggedUserData.userId, this.gameId)
         console.log("Succesfully Buyed Game")
         this.gamePurchased = true;
       } else {
-        console.error('Yetersiz bakiye.');
+        console.error('Insufficient balance.');
       }
     } catch (error) {
-      console.error('Oyun satın alınırken bir hata oluştu:', error);
+      console.error('An error occurred while purchasing the game:', error);
     }
   }
   checkGamePurchased() {

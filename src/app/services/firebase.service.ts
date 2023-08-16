@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map, switchMap } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service';
 import firebase from 'firebase/compat/app';
 import { combineLatest } from 'rxjs';
 
@@ -9,7 +8,7 @@ import { combineLatest } from 'rxjs';
   providedIn: 'root'
 })
 export class FirebaseService {
-  constructor(private authService: AuthService, private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore) { }
 
   getGames(limit: number) {
     return this.firestore.collection('games', ref => ref.limit(limit).orderBy('date', 'desc')).snapshotChanges().pipe(map(actions => {
@@ -110,9 +109,9 @@ export class FirebaseService {
     }
   }
 
-  async updateBalance(newBalance: any) {
+  async updateBalance(userId: any, newBalance: any) {
     try {
-      await this.firestore.collection('users').doc(this.authService.loggedUserData$.value.userId).update({ balance: newBalance });
+      await this.firestore.collection('users').doc(userId).update({ balance: newBalance });
       console.log('Balance updated successfully.');
     } catch (error) {
       console.error('Error updating balance:', error);

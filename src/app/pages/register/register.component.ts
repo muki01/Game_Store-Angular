@@ -12,13 +12,13 @@ export class RegisterComponent {
   password = '';
   repassword = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   onSubmit() {
     if (this.password === this.repassword) {
       this.authService.signUp(this.email, this.password, this.username);
     } else {
-      console.error('Şifreler uyuşmuyor.');
+      console.error('Passwords do not match.');
     }
   }
 }

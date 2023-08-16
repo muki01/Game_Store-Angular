@@ -19,7 +19,6 @@ export class SearchComponent implements OnInit {
       if (searchText) {
         this.firebaseService.searchGames(searchText).subscribe((games: any[]) => {
           this.searchedGames = games;
-          console.log(this.searchedGames)
         });
       }
     });
