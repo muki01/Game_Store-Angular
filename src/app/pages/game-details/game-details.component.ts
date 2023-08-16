@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FirebaseService } from '../../services/firebase.service';
 import { Router } from '@angular/router';
@@ -9,29 +9,39 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './game-details.component.html',
   styleUrls: ['./game-details.component.css']
 })
-export class GameDetailsComponent {
+export class GameDetailsComponent implements OnInit {
   popularGames: any[] = [];
   randomGames: any[] = [];
+
   gameData: any = {};
   gameId: any;
   creatorUserData: any = {};
 
+  loggedUserId: any;
   loggedUserData: any;
   gamePurchased: boolean = false;
 
-  constructor(private route: ActivatedRoute, private firebaseService: FirebaseService, private router: Router, private authService: AuthService) {
+  constructor(private route: ActivatedRoute, private firebaseService: FirebaseService, private router: Router, private authService: AuthService) { }
+
+
+  ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       this.gameId = params.get('gameId');
       if (this.gameId) {
         this.firebaseService.getGameById(this.gameId).subscribe((gameData: any) => {
-          if (gameData) {
-            this.gameData = gameData;
-            this.authService.loggedUserData$.subscribe(userData => {
-              this.loggedUserData = userData;
-            });
+          this.gameData = gameData;
+          if (this.gameData) {
             this.firebaseService.getUserById(this.gameData.creatorId).subscribe((userData: any) => {
               this.creatorUserData = userData;
-              this.checkGamePurchased();
+            });
+            this.authService.loggedUser$.subscribe(user => {
+              this.loggedUserId = user?.uid
+              if (this.loggedUserId) {
+                this.firebaseService.getUserById(this.loggedUserId).subscribe((userData: any) => {
+                  this.loggedUserData = userData;
+                  this.gamePurchased = !!this.loggedUserData.purchasedGames.includes(this.gameId)
+                });
+              }
             });
           }
         });
@@ -44,7 +54,6 @@ export class GameDetailsComponent {
     this.firebaseService.getRandomGames(3).subscribe((randomGames: any[]) => {
       this.randomGames = randomGames;
     });
-
   }
 
   editGame() {
@@ -64,31 +73,20 @@ export class GameDetailsComponent {
 
   async buyGame() {
     try {
-      const userBalance = this.loggedUserData.balance || 0;
-      const gamePrice = this.gameData.price || 0;
+      const userBalance = this.loggedUserData?.balance || 0;
+      const gamePrice = this.gameData?.price || 0;
 
       if (userBalance >= gamePrice) {
         const updatedBalance = userBalance - gamePrice;
-        this.firebaseService.updateBalance(this.loggedUserData.userId, updatedBalance)
-        this.firebaseService.addToPurchasedGames(this.loggedUserData.userId, this.gameId)
-        console.log("Succesfully Buyed Game")
+        await this.firebaseService.updateBalance(this.loggedUserId, updatedBalance);
+        await this.firebaseService.addToPurchasedGames(this.loggedUserId, this.gameId);
+        console.log("Successfully Bought Game");
         this.gamePurchased = true;
       } else {
         console.error('Insufficient balance.');
       }
     } catch (error) {
       console.error('An error occurred while purchasing the game:', error);
-    }
-  }
-  checkGamePurchased() {
-    const loggedUserData = this.loggedUserData.userId;
-    if (loggedUserData) {
-      this.firebaseService.getUserById(loggedUserData).subscribe((userData: any) => {
-        const purchasedGames = userData.purchasedGames || [];
-        this.gamePurchased = purchasedGames.includes(this.gameId);
-      });
-    } else {
-      this.gamePurchased = false;
     }
   }
 }

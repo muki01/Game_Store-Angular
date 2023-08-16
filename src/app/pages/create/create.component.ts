@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 
 export class CreateComponent {
+  loggedUserId: any
   newGame: any = {
     name: '',
     type: '',
@@ -22,13 +23,16 @@ export class CreateComponent {
     downloadURL: ''
   };
 
-  constructor(private firebaseService: FirebaseService, private datePipe: DatePipe, private router: Router, private authService: AuthService) {
+  constructor(private firebaseService: FirebaseService, private router: Router, private authService: AuthService) { }
 
+  ngOnInit(): void {
+    this.authService.loggedUser$.subscribe(user => {
+      this.loggedUserId = user?.uid
+    });
   }
 
   async onSubmit() {
-    this.newGame.creatorId = this.authService.loggedUserData$.value.userId;
-
+    this.newGame.creatorId = this.loggedUserId;
     if (this.newGame.name && this.newGame.type && this.newGame.image && this.newGame.description && this.newGame.creatorId && this.newGame.date && this.newGame.price && this.newGame.downloadURL) {
       const success = await this.firebaseService.addGame(this.newGame);
       if (success) {

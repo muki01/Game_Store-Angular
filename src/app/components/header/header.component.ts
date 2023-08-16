@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { FirebaseService } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-header',
@@ -7,12 +8,30 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  loggedUserId: any;
   loggedUserData: any;
-  constructor(private authService: AuthService,) {
-    this.authService.loggedUserData$.subscribe(userData => {
-      this.loggedUserData = userData;
+  isLoggedIn: boolean = false;
+
+  constructor(private authService: AuthService, private firebaseService: FirebaseService,) { }
+
+  ngOnInit(): void {
+    this.authService.loggedUser$.subscribe(user => {
+      this.isLoggedIn = !!user;
+      this.loggedUserId = user?.uid
+      console.log(this.isLoggedIn)
+      if (user?.uid) {
+        this.firebaseService.getUserById(user.uid).subscribe(userData => {
+          this.loggedUserData = userData;
+        });
+      }
     });
   }
+
+  signOut() {
+    this.authService.signOut();
+  }
+
+
 
   @HostListener('click', ['$event.target'])
   onClick(target: HTMLElement) {
@@ -20,7 +39,6 @@ export class HeaderComponent {
       this.navToggle();
     }
   }
-
   navToggle() {
     const menuBtn = document.querySelector('.menuBtn');
     if (menuBtn) {
@@ -36,10 +54,5 @@ export class HeaderComponent {
         navBar.removeAttribute('style');
       }
     }
-  }
-
-
-  signOut() {
-    this.authService.signOut();
   }
 }

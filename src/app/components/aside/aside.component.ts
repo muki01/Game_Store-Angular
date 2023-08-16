@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { FirebaseService } from '../../services/firebase.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,14 +10,26 @@ import { Router } from '@angular/router';
 })
 export class AsideComponent {
   loggedUserData: any;
+  loggedUserId: any;
+  isLoggedIn: boolean = false;
   searchText: string = '';
   searchedGames: any[] = [];
 
-  constructor(private authService: AuthService, private router: Router) {
-    this.authService.loggedUserData$.subscribe(userData => {
-      this.loggedUserData = userData;
+  constructor(private authService: AuthService, private router: Router, private firebaseService: FirebaseService) { }
+
+  ngOnInit(): void {
+    this.authService.loggedUser$.subscribe(user => {
+      this.isLoggedIn = !!user;
+      this.loggedUserId = user?.uid
+      console.log(this.isLoggedIn)
+      if (user?.uid) {
+        this.firebaseService.getUserById(user.uid).subscribe(userData => {
+          this.loggedUserData = userData;
+        });
+      }
     });
   }
+
   @Input() popularGames: any[] = [];
 
   navigateToSearch() {

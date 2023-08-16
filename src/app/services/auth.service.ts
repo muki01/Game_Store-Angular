@@ -8,14 +8,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  loggedUserData$: BehaviorSubject<any | null> = new BehaviorSubject(null);
+  loggedUser$: BehaviorSubject<any | null> = new BehaviorSubject(null);
   constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router) {
     this.afAuth.authState.subscribe((user) => {
-      if (user?.uid) {
-        this.firestore.collection('users').doc(user?.uid).valueChanges().subscribe((userData: any) => {
-          this.loggedUserData$.next({ userId: user?.uid, ...userData });
-        });
-      }
+      this.loggedUser$.next(user);
     });
   }
 

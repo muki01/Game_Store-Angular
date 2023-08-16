@@ -11,73 +11,103 @@ export class FirebaseService {
   constructor(private firestore: AngularFirestore) { }
 
   getGames(limit: number) {
-    return this.firestore.collection('games', ref => ref.limit(limit).orderBy('date', 'desc')).snapshotChanges().pipe(map(actions => {
-      return actions.map(action => {
-        const id = action.payload.doc.id;
-        const data: any = action.payload.doc.data()
-        return { id, ...data };
-      });
-    })
-    );
+    try {
+      return this.firestore.collection('games', ref => ref.limit(limit).orderBy('date', 'desc')).snapshotChanges().pipe(map(actions => {
+        return actions.map(action => {
+          const id = action.payload.doc.id;
+          const data: any = action.payload.doc.data()
+          return { id, ...data };
+        });
+      }));
+    } catch (error) {
+      console.error("An error occurred while fetching games:", error);
+      throw error;
+    }
   }
 
   getPopularGames(limit: number) {
-    return this.firestore.collection('games', ref => ref.limit(limit).orderBy('date', 'asc')).snapshotChanges().pipe(map(actions => {
-      return actions.map(action => {
-        const id = action.payload.doc.id;
-        const data: any = action.payload.doc.data()
-        return { id, ...data };
-      });
-    })
-    );
+    try {
+      return this.firestore.collection('games', ref => ref.limit(limit).orderBy('date', 'asc')).snapshotChanges().pipe(map(actions => {
+        return actions.map(action => {
+          const id = action.payload.doc.id;
+          const data: any = action.payload.doc.data()
+          return { id, ...data };
+        });
+      }));
+    } catch (error) {
+      console.error("An error occurred while fetching popular games:", error);
+      throw error;
+    }
   }
 
   getRandomGames(limit: number) {
-    return this.firestore.collection('games').get().pipe(
-      map(querySnapshot => {
-        const games: any = [];
-        querySnapshot.forEach(doc => {
-          const id = doc.id;
-          const data: any = doc.data();
-          games.push({ id, ...data });
-        });
+    try {
+      return this.firestore.collection('games').get().pipe(
+        map(querySnapshot => {
+          const games: any = [];
+          querySnapshot.forEach(doc => {
+            const id = doc.id;
+            const data: any = doc.data();
+            games.push({ id, ...data });
+          });
 
-        const shuffledGames = games.sort(() => 0.5 - Math.random());
-        return shuffledGames.slice(0, limit);
-      })
-    );
+          const shuffledGames = games.sort(() => 0.5 - Math.random());
+          return shuffledGames.slice(0, limit);
+        }));
+    } catch (error) {
+      console.error("An error occurred while fetching random games:", error);
+      throw error;
+    }
   }
 
   getGamesByCategory(category: string, limit: number) {
-    return this.firestore.collection('games', ref => ref.where('type', '==', category).orderBy('date', 'desc').limit(limit)).snapshotChanges().pipe(map(actions => {
-      return actions.map(action => {
-        const id = action.payload.doc.id;
-        const data: any = action.payload.doc.data()
-        return { id, ...data };
-      });
-    })
-    );
+    try {
+      return this.firestore.collection('games', ref => ref.where('type', '==', category).orderBy('date', 'desc').limit(limit)).snapshotChanges().pipe(map(actions => {
+        return actions.map(action => {
+          const id = action.payload.doc.id;
+          const data: any = action.payload.doc.data()
+          return { id, ...data };
+        });
+      }));
+    } catch (error) {
+      console.error("An error occurred while fetching games by category:", error);
+      throw error;
+    }
   }
 
   getPurchasedGames(userId: string) {
-    return this.firestore.collection('users').doc(userId).valueChanges().pipe(
-      switchMap((user: any) => {
-        const gameIds = user.purchasedGames || [];
-        const gameObservables = gameIds.map((gameId: string) =>
-          this.firestore.collection('games').doc(gameId).valueChanges().pipe(
-            map((game: any) => ({ id: gameId, ...game }))
-          )
-        );
-        return combineLatest(gameObservables);
-      })
-    );
+    try {
+      return this.firestore.collection('users').doc(userId).valueChanges().pipe(
+        switchMap((user: any) => {
+          const gameIds = user.purchasedGames || [];
+          const gameObservables = gameIds.map((gameId: string) =>
+            this.firestore.collection('games').doc(gameId).valueChanges().pipe(
+              map((game: any) => ({ id: gameId, ...game }))
+            )
+          );
+          return combineLatest(gameObservables);
+        }));
+    } catch (error) {
+      console.error("An error occurred while fetching purchased games:", error);
+      throw error;
+    }
   }
 
   getGameById(gameId: string) {
-    return this.firestore.collection('games').doc(gameId).valueChanges();
+    try {
+      return this.firestore.collection('games').doc(gameId).valueChanges();
+    } catch (error) {
+      console.error("An error occurred while fetching game by ID:", error);
+      throw error;
+    }
   }
   getUserById(userId: string) {
-    return this.firestore.collection('users').doc(userId).valueChanges();
+    try {
+      return this.firestore.collection('users').doc(userId).valueChanges();
+    } catch (error) {
+      console.error("An error occurred while fetching user by ID:", error);
+      throw error;
+    }
   }
 
   async addGame(game: any) {

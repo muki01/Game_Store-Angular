@@ -5,7 +5,7 @@
         <img src="{{profileData.image}}" alt="">
         <h1>{{ profileData.username }}</h1>
         <h2>{{ profileData.email}}</h2>
-        <h2 *ngIf="notYourProfile == false">💵Balance: {{profileData.balance}}$</h2>
+        <h2 *ngIf="isYourProfile == true">💵Balance: {{profileData.balance}}$</h2>
         <p>{{profileData.title}}</p>
       </div>
     </div>
@@ -13,7 +13,7 @@
       <div class="myGamesArea">
         <h1>Purchased Games</h1>
         <hr>
-        <div class="postContainer" *ngIf="purchasedGames.length>0">
+        <div class="postContainer" *ngIf="purchasedGames">
           <div class="post" *ngFor="let purchasedGames of purchasedGames">
             <a [routerLink]="['/game', purchasedGames.id]"><img src="{{purchasedGames.image}}"></a>
             <a [routerLink]="['/game', purchasedGames.id]">
@@ -25,7 +25,7 @@
           <h2>No Games</h2>
         </div>
       </div>
-      <div class="settingsArea" *ngIf="notYourProfile == false">
+      <div class="settingsArea" *ngIf="isYourProfile == true">
         <h1>Settings</h1>
         <hr>
         <div class="settings">
@@ -49,17 +49,3 @@
     </section>
   </div>
 </main>
-
-<!-- <div class="profile-container" *ngIf="userProfile">
-  <h1>{{ userProfile.username }}</h1>
-  <p>Email: {{ userProfile.email }}</p>
-</div> -->
-
-
-
-<!-- <div class="post" *ngFor="let popularGames of popularGames">
-  <a [routerLink]="['/game', popularGames.id]"><img src="{{popularGames.image}}"></a>
-  <a [routerLink]="['/game', popularGames.id]">
-    <h2>{{popularGames.name}}</h2>
-  </a>
-</div> -->
