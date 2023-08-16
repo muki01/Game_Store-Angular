@@ -5,7 +5,7 @@
         <div class="container">
           <div class="textArea">
             <h1>{{gameData.name}}</h1>
-            <div class="options" *ngIf="currentUserData && currentUserData.role == 'admin'">
+            <div class="options" *ngIf="loggedUserData && loggedUserData.role == 'admin'">
               <a (click)="editGame()"> <i class="fa-solid fa-pencil"></i> Edit </a>
               <a (click)="deleteGame()"><i class="fa-solid fa-trash-can"></i> Remove </a>
             </div>
@@ -14,10 +14,10 @@
           <h2><i class="fas fa-user"></i><a [routerLink]="['/users/profile', gameData.creatorId]">
               {{creatorUserData.username}}
             </a><i class="far fa-clock"></i>
-            {{gameData.date.toDate() | date:'MMMM, dd yyyy'}}</h2>
+            {{ gameData.date ? (gameData.date.toDate() | date:'MMMM, dd yyyy') : '' }}</h2>
           <img src="{{gameData.image}}" alt="{{gameData.name}}">
           <p>{{gameData.description}}</p>
-          <div class="btnArea">
+          <div class="btnArea" *ngIf="loggedUserData">
             <button *ngIf="!gamePurchased" (click)="buyGame()" class="btn"><i class="fa-regular fa-credit-card"></i>
               {{gameData.price}}$ Buy
               Now</button>

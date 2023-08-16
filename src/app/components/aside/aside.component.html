@@ -44,18 +44,18 @@
     <div class="container">
       <h1>Your Profile</h1>
       <hr>
-      <div class="post" *ngIf="currentUserData">
-        <a [routerLink]="['/users/profile', currentUserId]"><img src="{{currentUserData.image}}"></a>
+      <div class="post" *ngIf="loggedUserData">
+        <a [routerLink]="['/users/profile', loggedUserData.userId]"><img src="{{loggedUserData.image}}"></a>
         <div class="textArea">
-          <a [routerLink]="['/users/profile', currentUserId]">
-            <h2>{{currentUserData.username}}</h2>
+          <a [routerLink]="['/users/profile', loggedUserData.userId]">
+            <h2>{{loggedUserData.username}}</h2>
           </a>
-          <a [routerLink]="['/users/profile', currentUserId]">
+          <a [routerLink]="['/users/profile', loggedUserData.userId]">
             <h3>View complete profile</h3>
           </a>
         </div>
       </div>
-      <div class="notLoggedin" *ngIf="!currentUserId">
+      <div class="notLoggedin" *ngIf="!loggedUserData">
         <h2>Not Logged In</h2>
       </div>
     </div>

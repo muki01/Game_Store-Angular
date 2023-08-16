@@ -2,15 +2,20 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  currentUserId: any | null = null;
+  loggedUserData$: BehaviorSubject<any | null> = new BehaviorSubject(null);
   constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router) {
     this.afAuth.authState.subscribe((user) => {
-      this.currentUserId = user?.uid;
+      if (user?.uid) {
+        this.firestore.collection('users').doc(user?.uid).valueChanges().subscribe((userData: any) => {
+          this.loggedUserData$.next({ userId: user?.uid, ...userData });
+        });
+      }
     });
   }
 

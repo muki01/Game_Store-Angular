@@ -49,14 +49,6 @@ export class FirebaseService {
     );
   }
 
-  private shuffleArray(array: any[]) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-
   getGamesByCategory(category: string, limit: number) {
     return this.firestore.collection('games', ref => ref.where('type', '==', category).orderBy('date', 'desc').limit(limit)).snapshotChanges().pipe(map(actions => {
       return actions.map(action => {
@@ -120,7 +112,7 @@ export class FirebaseService {
 
   async updateBalance(newBalance: any) {
     try {
-      await this.firestore.collection('users').doc(this.authService.currentUserId).update({ balance: newBalance });
+      await this.firestore.collection('users').doc(this.authService.loggedUserData$.value.userId).update({ balance: newBalance });
       console.log('Balance updated successfully.');
     } catch (error) {
       console.error('Error updating balance:', error);

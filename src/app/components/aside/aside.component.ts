@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { FirebaseService } from '../../services/firebase.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,17 +8,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./aside.component.css']
 })
 export class AsideComponent {
-  currentUserData: any | null;
-  currentUserId: any | null;
+  loggedUserData: any;
   searchText: string = '';
   searchedGames: any[] = [];
 
-  constructor(private afAuth: AngularFireAuth, public authService: AuthService, private firebaseService: FirebaseService, private router: Router) {
-    this.afAuth.authState.subscribe((user) => {
-      this.currentUserId = user?.uid;
-      this.firebaseService.getUserById(this.currentUserId).subscribe((userData: any) => {
-        this.currentUserData = userData;
-      });
+  constructor(private authService: AuthService, private router: Router) {
+    this.authService.loggedUserData$.subscribe(userData => {
+      this.loggedUserData = userData;
     });
   }
   @Input() popularGames: any[] = [];

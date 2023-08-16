@@ -107,19 +107,21 @@ section .settingsArea h1 {
   font-family: "Poppins", sans-serif;
 }
 
-section .settingsArea form {
-  width: 40%;
+section .settingsArea .settings {
+  width: 50%;
   text-align: center;
 }
 section .settingsArea .row {
   display: grid;
-  grid-template-columns: 150px 300px;
+  grid-template-columns: auto 70%;
+  column-gap: 3%;
   margin-bottom: 10px;
 }
 section .settingsArea .row h2 {
   font-weight: bold;
   font-family: "Poppins", sans-serif;
   font-size: 18px;
+  text-align: end;
 }
 section .settingsArea .row input {
   padding: 7px;
@@ -176,6 +178,9 @@ section .settingsArea .submitBtn:hover {
   section .myGamesArea .postContainer {
     grid-template-columns: 32% 32% 32%;
     column-gap: 2%;
+  }
+  section .settingsArea .settings {
+    width: 100%;
   }
 }
 

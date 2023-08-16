@@ -22,11 +22,12 @@ export class CreateComponent {
     downloadURL: ''
   };
 
-  constructor(private firebaseService: FirebaseService, private datePipe: DatePipe, private router: Router, private authService: AuthService) { }
+  constructor(private firebaseService: FirebaseService, private datePipe: DatePipe, private router: Router, private authService: AuthService) {
+
+  }
 
   async onSubmit() {
-    // this.newGame.date = this.getCurrentDate();
-    this.newGame.creatorId = this.authService.currentUserId;
+    this.newGame.creatorId = this.authService.loggedUserData$.value.userId;
 
     if (this.newGame.name && this.newGame.type && this.newGame.image && this.newGame.description && this.newGame.creatorId && this.newGame.date && this.newGame.price && this.newGame.downloadURL) {
       const success = await this.firebaseService.addGame(this.newGame);
@@ -54,11 +55,5 @@ export class CreateComponent {
       date: '',
       downloadURL: ''
     };
-  }
-
-  getCurrentDate(): string {
-    const currentDate = new Date();
-    const formattedDate = this.datePipe.transform(currentDate, 'MMMM d, y');
-    return formattedDate || '';
   }
 }

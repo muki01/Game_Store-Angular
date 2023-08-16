@@ -7,13 +7,13 @@ import { FirebaseService } from '../../../services/firebase.service';
   styleUrls: ['./article.component.css']
 })
 export class ArticleComponent {
-  userData: any = {};
+  creatorData: any = {};
   constructor(private firebaseService: FirebaseService) { }
   @Input() game: any;
 
   ngOnInit(): void {
-    this.firebaseService.getUserById(this.game.creatorId).subscribe((userData: any) => {
-      this.userData = userData
+    this.firebaseService.getUserById(this.game.creatorId).subscribe((creatorData: any) => {
+      this.creatorData = creatorData
     });
   }
 }

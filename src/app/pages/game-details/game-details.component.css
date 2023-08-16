@@ -37,7 +37,6 @@ section .postArea .textArea {
   justify-content: space-between;
 }
 section .postArea .textArea h1 {
-  display: inline-block;
   font-weight: bold;
   font-size: 26px;
   color: black;
@@ -45,10 +44,13 @@ section .postArea .textArea h1 {
 }
 section .postArea .textArea .options {
   margin: auto 0;
-  margin-left: auto;
+  text-align: end;
 }
 section .postArea .options a {
+  display: inline-block;
+  margin: 5px 5px;
   color: black;
+  font-weight: bold;
   transition: none;
   cursor: pointer;
 }
@@ -184,5 +186,10 @@ section .commentsArea h1 {
   }
   section .container {
     width: 90%;
+  }
+
+  section .postArea .textArea .options {
+    margin: auto 0;
+    margin-left: auto;
   }
 }
