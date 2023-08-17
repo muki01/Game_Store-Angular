@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { DatePipe } from '@angular/common';
 import { FirebaseService } from '../../services/firebase.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-create',
@@ -12,18 +12,20 @@ import { Router } from '@angular/router';
 
 export class CreateComponent {
   loggedUserId: any
-  newGame: any = {
-    name: '',
-    type: '',
-    image: '',
-    description: '',
-    price: '',
-    creatorId: '',
-    date: new Date(),
-    downloadURL: ''
-  };
 
-  constructor(private firebaseService: FirebaseService, private router: Router, private authService: AuthService) { }
+  createForm: FormGroup;
+  errorMessage: string = '';
+
+  constructor(private formBuilder: FormBuilder, private firebaseService: FirebaseService, private router: Router, private authService: AuthService) {
+    this.createForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      type: ['', [Validators.required]],
+      imageURL: ['', [Validators.required, Validators.pattern]],
+      description: ['', [Validators.required, Validators.minLength(10)]],
+      price: ['', [Validators.required, Validators.nullValidator]],
+      downloadURL: ['', [Validators.required, Validators.pattern]]
+    });
+  }
 
   ngOnInit(): void {
     this.authService.loggedUser$.subscribe(user => {
@@ -31,25 +33,8 @@ export class CreateComponent {
     });
   }
 
-  async onSubmit() {
-    this.newGame.creatorId = this.loggedUserId;
-    if (this.newGame.name && this.newGame.type && this.newGame.image && this.newGame.description && this.newGame.creatorId && this.newGame.date && this.newGame.price && this.newGame.downloadURL) {
-      const success = await this.firebaseService.addGame(this.newGame);
-      if (success) {
-        console.log('Game added successfully.');
-        this.resetForm();
-        this.router.navigate(['/']);
-      } else {
-        console.error('Error adding game.');
-      }
-    } else {
-      console.error('Please fill all the fields.');
-    }
-  }
-
-
-  resetForm() {
-    this.newGame = {
+  async createGame() {
+    const newGame: any = {
       name: '',
       type: '',
       image: '',
@@ -59,5 +44,21 @@ export class CreateComponent {
       date: '',
       downloadURL: ''
     };
+    if (this.createForm.valid) {
+      const formData = this.createForm.value;
+      newGame.name = formData.name
+      newGame.type = formData.type
+      newGame.image = formData.imageURL
+      newGame.description = formData.description
+      newGame.price = formData.price
+      newGame.creatorId = this.loggedUserId
+      newGame.date = new Date()
+      newGame.downloadURL = formData.downloadURL
+
+      await this.firebaseService.addGame(newGame);
+      this.router.navigate(['/']);
+    } else {
+      this.errorMessage = "Fill in the Data Correctly"
+    }
   }
 }

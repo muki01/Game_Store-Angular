@@ -18,7 +18,6 @@ export class HeaderComponent {
     this.authService.loggedUser$.subscribe(user => {
       this.isLoggedIn = !!user;
       this.loggedUserId = user?.uid
-      console.log(this.isLoggedIn)
       if (user?.uid) {
         this.firebaseService.getUserById(user.uid).subscribe(userData => {
           this.loggedUserData = userData;

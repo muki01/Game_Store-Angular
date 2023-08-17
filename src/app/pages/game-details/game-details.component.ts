@@ -66,9 +66,8 @@ export class GameDetailsComponent implements OnInit {
 
   deleteGame() {
     const id: any = this.gameId
-    this.firebaseService.deleteGame(id).then(() => {
-      this.router.navigate(['/']);
-    });
+    this.firebaseService.deleteGame(id)
+    this.router.navigate(['/']);
   }
 
   async buyGame() {

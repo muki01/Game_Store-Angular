@@ -1,12 +1,27 @@
+<div class="error" *ngIf="errorMessage">
+  <div class="errorBox">
+    <div class="container">
+      <h1>{{errorMessage}}</h1>
+    </div>
+  </div>
+</div>
+
 <main>
   <div class="main-container">
     <div class="create-box">
       <h1 class="formName">Create Game</h1>
-      <form (ngSubmit)="onSubmit()" #gameForm="ngForm">
+      <form (ngSubmit)="createGame()" [formGroup]="createForm">
         <label>Name</label>
-        <input type="text" [(ngModel)]="newGame.name" name="name" required />
+        <input type="text" formControlName="name" name="name" minlength="3" required />
+        <div class="validation"
+          *ngIf="createForm.controls['name'].invalid && (createForm.controls['name'].dirty || createForm.controls['name'].touched)">
+          <div *ngIf="createForm.controls['name'].hasError('required')">Name is required.</div>
+          <div *ngIf="createForm.controls['name'].hasError('minlength')">Name must be at least 3 characters.
+          </div>
+        </div>
+
         <label>Game Type</label>
-        <select name="type" [(ngModel)]="newGame.type" required>
+        <select name="type" formControlName="type" required>
           <option disabled selected value="">Select Game Type</option>
           <option value="action">Action</option>
           <option value="adventure">Adventure</option>
@@ -16,14 +31,47 @@
           <option value="racing">Racing</option>
           <option value="horror">Horror</option>
         </select>
+        <div class="validation"
+          *ngIf="createForm.controls['type'].invalid && (createForm.controls['type'].dirty || createForm.controls['type'].touched)">
+          <div *ngIf="createForm.controls['type'].hasError('required')">Game Type is required.</div>
+        </div>
+
         <label>Image URL</label>
-        <input type="text" [(ngModel)]="newGame.image" name="image" required>
+        <input type="text" formControlName="imageURL" name="imageURL" required pattern="^(https?:\/\/).*$">
+        <div class="validation"
+          *ngIf="createForm.controls['imageURL'].invalid && (createForm.controls['imageURL'].dirty || createForm.controls['imageURL'].touched)">
+          <div *ngIf="createForm.controls['imageURL'].hasError('required')">Image URL is required.</div>
+          <div *ngIf="createForm.controls['imageURL'].hasError('pattern')">Url must start with 'http://' or
+            'https://'.</div>
+        </div>
+
         <label>Description</label>
-        <textarea [(ngModel)]="newGame.description" name="description" required></textarea>
+        <textarea formControlName="description" name="description" required minlength="10"></textarea>
+        <div class="validation"
+          *ngIf="createForm.controls['description'].invalid && (createForm.controls['description'].dirty || createForm.controls['description'].touched)">
+          <div *ngIf="createForm.controls['description'].hasError('required')">Description is required.</div>
+          <div *ngIf="createForm.controls['description'].hasError('minlength')">Description must be at least 10
+            characters.
+          </div>
+        </div>
+
         <label>Price</label>
-        <input type="number" [(ngModel)]="newGame.price" name="price" min="0" required>
-        <label>Donwload URL</label>
-        <input type="text" [(ngModel)]="newGame.downloadURL" name="downloadURL" required>
+        <input type="number" formControlName="price" name="price" min="0" required>
+        <div class="validation"
+          *ngIf="createForm.controls['price'].invalid && (createForm.controls['price'].dirty || createForm.controls['price'].touched)">
+          <div *ngIf="createForm.controls['price'].hasError('required')">Price is required.</div>
+          <div *ngIf="createForm.controls['price'].hasError('min')">Price must be at least 0.</div>
+        </div>
+
+        <label>Download URL</label>
+        <input type="text" formControlName="downloadURL" name="downloadURL" required pattern="^(https?:\/\/).*$">
+        <div class="validation"
+          *ngIf="createForm.controls['downloadURL'].invalid && (createForm.controls['downloadURL'].dirty || createForm.controls['downloadURL'].touched)">
+          <div *ngIf="createForm.controls['downloadURL'].hasError('required')">Download URL is required.</div>
+          <div *ngIf="createForm.controls['downloadURL'].hasError('pattern')">Url must start with 'http://' or
+            'https://'.</div>
+        </div>
+
         <button class="submitBtn" type="submit">Create Game</button>
       </form>
     </div>

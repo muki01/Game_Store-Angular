@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -7,18 +8,28 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  username = '';
-  email = '';
-  password = '';
-  repassword = '';
+  registerForm: FormGroup;
+  errorMessage: string = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService) {
+    this.registerForm = this.formBuilder.group({
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      repassword: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
 
-  onSubmit() {
-    if (this.password === this.repassword) {
-      this.authService.signUp(this.email, this.password, this.username);
+  register() {
+    if (this.registerForm.valid) {
+      const formData = this.registerForm.value;
+      if (formData.password === formData.repassword) {
+        this.authService.signUp(formData.email, formData.password, formData.username);
+      } else {
+        this.errorMessage = "Passwords do not match."
+      }
     } else {
-      console.error('Passwords do not match.');
+      this.errorMessage = "Fill in the Data Correctly"
     }
   }
 }
