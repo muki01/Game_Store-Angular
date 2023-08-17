@@ -11,6 +11,7 @@ export class HeaderComponent {
   loggedUserId: any;
   loggedUserData: any;
   isLoggedIn: boolean = false;
+  isAdmin: boolean = false
 
   constructor(private authService: AuthService, private firebaseService: FirebaseService,) { }
 
@@ -21,6 +22,8 @@ export class HeaderComponent {
       if (user?.uid) {
         this.firebaseService.getUserById(user.uid).subscribe(userData => {
           this.loggedUserData = userData;
+          if (this.loggedUserData.role == "admin")
+            this.isAdmin = true
         });
       }
     });
