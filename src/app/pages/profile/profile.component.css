@@ -123,6 +123,9 @@ section .settingsArea .row h2 {
   font-size: 18px;
   text-align: end;
 }
+section .settingsArea .row .validation {
+  color: red;
+}
 section .settingsArea .row input {
   padding: 7px;
   box-sizing: border-box;

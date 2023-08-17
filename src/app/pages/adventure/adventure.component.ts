@@ -13,7 +13,7 @@ export class AdventureComponent implements OnInit {
   constructor(private firebaseService: FirebaseService) { }
 
   ngOnInit(): void {
-    this.firebaseService.getGamesByCategory("adventure", 6).subscribe((games: any[]) => {
+    this.firebaseService.getGamesByCategory("adventure").subscribe((games: any[]) => {
       this.categorizedGames = games;
     });
     this.firebaseService.getPopularGames(3).subscribe((games: any[]) => {

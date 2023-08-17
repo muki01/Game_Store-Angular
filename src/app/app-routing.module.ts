@@ -17,7 +17,6 @@ import { GameDetailsComponent } from './pages/game-details/game-details.componen
 import { EditComponent } from './pages/edit/edit.component';
 import { SearchComponent } from './pages/search/search.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { AdminGuard } from './admin.guard'
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -30,10 +29,10 @@ const routes: Routes = [
   { path: 'games/horror', component: HorrorComponent },
   { path: 'users/login', component: LoginComponent },
   { path: 'users/register', component: RegisterComponent },
-  { path: 'games/create', component: CreateComponent },//canActivate: [AdminGuard]
+  { path: 'games/create', component: CreateComponent },
   { path: 'users/profile/:userId', component: ProfileComponent },
   { path: 'game/:gameId', component: GameDetailsComponent },
-  { path: 'edit/:gameId', component: EditComponent }, //canActivate: [AdminGuard]
+  { path: 'edit/:gameId', component: EditComponent },
   { path: 'search', component: SearchComponent },
   { path: '**', component: NotFoundComponent }
 ];

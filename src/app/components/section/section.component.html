@@ -6,7 +6,7 @@
   <div class="postArea" *ngIf="categorizedGames.length > 0">
     <app-article *ngFor="let game of categorizedGames" [game]="game"></app-article>
   </div>
-  <div class="buttonArea" *ngIf="categorizedGames.length >= 6">
+  <!-- <div class="buttonArea" *ngIf="categorizedGames.length >= 6">
     <a routerLink=""><button class="btn">LOAD MORE POSTS</button></a>
-  </div>
+  </div> -->
 </section>

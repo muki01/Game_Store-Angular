@@ -13,7 +13,7 @@ export class SportsComponent implements OnInit {
   constructor(private firebaseService: FirebaseService) { }
 
   ngOnInit(): void {
-    this.firebaseService.getGamesByCategory("sports", 6).subscribe((games: any[]) => {
+    this.firebaseService.getGamesByCategory("sports").subscribe((games: any[]) => {
       this.categorizedGames = games;
     });
     this.firebaseService.getPopularGames(3).subscribe((games: any[]) => {

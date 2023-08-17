@@ -10,9 +10,9 @@ import { combineLatest } from 'rxjs';
 export class FirebaseService {
   constructor(private firestore: AngularFirestore) { }
 
-  getGames(limit: number) {
+  getGames() {
     try {
-      return this.firestore.collection('games', ref => ref.limit(limit).orderBy('date', 'desc')).snapshotChanges().pipe(map(actions => {
+      return this.firestore.collection('games', ref => ref.orderBy('date', 'desc')).snapshotChanges().pipe(map(actions => {
         return actions.map(action => {
           const id = action.payload.doc.id;
           const data: any = action.payload.doc.data()
@@ -21,6 +21,21 @@ export class FirebaseService {
       }));
     } catch (error) {
       console.error("An error occurred while fetching games:", error);
+      throw error;
+    }
+  }
+
+  getGamesByCategory(category: string) {
+    try {
+      return this.firestore.collection('games', ref => ref.where('type', '==', category).orderBy('date', 'desc')).snapshotChanges().pipe(map(actions => {
+        return actions.map(action => {
+          const id = action.payload.doc.id;
+          const data: any = action.payload.doc.data()
+          return { id, ...data };
+        });
+      }));
+    } catch (error) {
+      console.error("An error occurred while fetching games by category:", error);
       throw error;
     }
   }
@@ -56,21 +71,6 @@ export class FirebaseService {
         }));
     } catch (error) {
       console.error("An error occurred while fetching random games:", error);
-      throw error;
-    }
-  }
-
-  getGamesByCategory(category: string, limit: number) {
-    try {
-      return this.firestore.collection('games', ref => ref.where('type', '==', category).orderBy('date', 'desc').limit(limit)).snapshotChanges().pipe(map(actions => {
-        return actions.map(action => {
-          const id = action.payload.doc.id;
-          const data: any = action.payload.doc.data()
-          return { id, ...data };
-        });
-      }));
-    } catch (error) {
-      console.error("An error occurred while fetching games by category:", error);
       throw error;
     }
   }
@@ -114,10 +114,8 @@ export class FirebaseService {
     try {
       await this.firestore.collection('games').add(game);
       console.log('Game added successfully.');
-      return true;
     } catch (error) {
       console.error('Error adding game:', error);
-      return false;
     }
   }
 

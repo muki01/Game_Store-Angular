@@ -25,14 +25,14 @@ export class AuthService {
         console.log('This username is already in use.');
         this.errorMessage$.next('This username is already in use.');
         this.errorMessage$.next(null)
-        return false;
+        return;
       }
 
       if (!emailQuerySnapshot.empty) {
         console.log('This email address is already in use.');
         this.errorMessage$.next('This email address is already in use.');
         this.errorMessage$.next(null)
-        return false;
+        return;
       }
 
       const authResult = await this.afAuth.createUserWithEmailAndPassword(email, password);
@@ -51,12 +51,12 @@ export class AuthService {
       }
       console.log("Registration Succresfully Comppleted");
       this.router.navigate(['/']);
-      return true;
+      return;
     } catch (error: any) {
       console.error('An error occurred during registration:', error);
       this.errorMessage$.next('An error occurred during registration.');
       this.errorMessage$.next(null)
-      return false;
+      return;
     }
   }
 
@@ -65,7 +65,7 @@ export class AuthService {
       await this.afAuth.signInWithEmailAndPassword(email, password);
       console.log("Login Succresfully Comppleted");
       this.router.navigate(['/']);
-      return true;
+      return;
     } catch (error: any) {
       if (error.code === 'auth/user-not-found') {
         console.log('User not found. Please check your email.');
@@ -76,11 +76,11 @@ export class AuthService {
         this.errorMessage$.next('Incorrect password. Please check your password.');
         this.errorMessage$.next(null)
       } else {
-        console.log('An error occurred during login.');
+        console.error('An error occurred during login.', error);
         this.errorMessage$.next('An error occurred during login.');
         this.errorMessage$.next(null)
       }
-      return false;
+      return;
     }
   }
 
@@ -89,10 +89,10 @@ export class AuthService {
       await this.afAuth.signOut();
       console.log("Logout Succresfully Comppleted");
       this.router.navigate(['/users/login']);
-      return true;
+      return;
     } catch (error: any) {
       console.error('An error occurred while Logout:', error);
-      return false;
+      return;
     }
   }
 

@@ -1,3 +1,4 @@
+<app-error [errorMessage]="errorMessage"></app-error>
 <main id="main">
   <div class="main-container">
     <div class="sideBar">
@@ -29,18 +30,30 @@
         <h1>Settings</h1>
         <hr>
         <div class="settings">
-          <form (ngSubmit)="saveSettings()" #settingsForm="ngForm" *ngIf="profileData">
+          <form (ngSubmit)="saveSettings()" [formGroup]="editProfileForm" *ngIf="profileData">
             <div class="row">
               <h2>User name: </h2>
-              <input type="text" [(ngModel)]="profileData.username" name="username">
+              <input type="text" formControlName="username" name="username" required minlength="3">
+              <div class="validation"
+                *ngIf="editProfileForm.controls['username'].invalid && (editProfileForm.controls['username'].dirty || editProfileForm.controls['username'].touched)">
+                <div *ngIf="editProfileForm.controls['username'].hasError('required')">Username is required.</div>
+                <div *ngIf="editProfileForm.controls['username'].hasError('minlength')">Username must be at least 3
+                  characters.</div>
+              </div>
             </div>
             <div class="row">
               <h2>Profile Photo: </h2>
-              <input type="text" [(ngModel)]="profileData.image" name="image">
+              <input type="text" formControlName="image" name="image" required pattern="^(https?:\/\/).*$">
+              <div class="validation"
+                *ngIf="editProfileForm.controls['image'].invalid && (editProfileForm.controls['image'].dirty || editProfileForm.controls['image'].touched)">
+                <div *ngIf="editProfileForm.controls['image'].hasError('required')">Image URL is required.</div>
+                <div *ngIf="editProfileForm.controls['image'].hasError('pattern')">Url must start with 'http://' or
+                  'https://'.</div>
+              </div>
             </div>
             <div class="row">
               <h2>Profile Title: </h2>
-              <textarea [(ngModel)]="profileData.title" name="title"></textarea>
+              <textarea formControlName="title" name="title"></textarea>
             </div>
             <button class="submitBtn" type="submit">Save Changes</button>
           </form>

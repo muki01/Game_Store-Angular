@@ -3,7 +3,7 @@ main {
   height: auto;
   font-family: "Roboto", sans-serif;
   background: radial-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("../../../assets/Wallpapers/Gif.gif");
+    url("../../../assets/Wallpapers/10.jpg");
   background-size: cover;
   background-position: center;
 }

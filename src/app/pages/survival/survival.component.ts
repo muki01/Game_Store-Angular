@@ -13,7 +13,7 @@ export class SurvivalComponent implements OnInit {
   constructor(private firebaseService: FirebaseService) { }
 
   ngOnInit(): void {
-    this.firebaseService.getGamesByCategory("survival", 6).subscribe((games: any[]) => {
+    this.firebaseService.getGamesByCategory("survival").subscribe((games: any[]) => {
       this.categorizedGames = games;
     });
     this.firebaseService.getPopularGames(3).subscribe((games: any[]) => {

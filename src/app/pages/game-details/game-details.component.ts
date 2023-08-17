@@ -43,6 +43,8 @@ export class GameDetailsComponent implements OnInit {
                 });
               }
             });
+          } else {
+            this.router.navigate(['/']);
           }
         });
       }
@@ -65,8 +67,7 @@ export class GameDetailsComponent implements OnInit {
   }
 
   deleteGame() {
-    const id: any = this.gameId
-    this.firebaseService.deleteGame(id)
+    this.firebaseService.deleteGame(this.gameId)
     this.router.navigate(['/']);
   }
 

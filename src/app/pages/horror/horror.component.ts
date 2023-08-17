@@ -14,7 +14,7 @@ export class HorrorComponent implements OnInit {
   constructor(private firebaseService: FirebaseService) { }
 
   ngOnInit(): void {
-    this.firebaseService.getGamesByCategory("horror", 6).subscribe((games: any[]) => {
+    this.firebaseService.getGamesByCategory("horror").subscribe((games: any[]) => {
       this.categorizedGames = games;
     });
     this.firebaseService.getPopularGames(3).subscribe((games: any[]) => {

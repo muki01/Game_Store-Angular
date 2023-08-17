@@ -31,7 +31,11 @@ export class EditComponent {
       if (this.gameId) {
         this.firebaseService.getGameById(this.gameId).subscribe((gameData: any) => {
           this.gameData = gameData;
-          this.updateFormValues();
+          if (gameData) {
+            this.updateFormValues();
+          } else {
+            this.router.navigate(['404']);
+          }
         });
       }
     });
