@@ -14,7 +14,7 @@ export class CreateComponent {
   loggedUserId: any
 
   createForm: FormGroup;
-  errorMessage: string = '';
+  errorMessage: string | null = null;
 
   constructor(private formBuilder: FormBuilder, private firebaseService: FirebaseService, private router: Router, private authService: AuthService) {
     this.createForm = this.formBuilder.group({
@@ -58,7 +58,16 @@ export class CreateComponent {
       await this.firebaseService.addGame(newGame);
       this.router.navigate(['/']);
     } else {
-      this.errorMessage = "Fill in the Data Correctly"
+      this.showErrorMessage("Fill in the Data Correctly");
+    }
+  }
+
+  private showErrorMessage(message: string | null) {
+    if (message !== null) {
+      this.errorMessage = message;
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 3000);
     }
   }
 }

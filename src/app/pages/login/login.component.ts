@@ -9,13 +9,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  errorMessage: string = '';
+  errorMessage: string | null = null;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+
+    this.authService.errorMessage$.subscribe((errorMessage) => {
+      this.showErrorMessage(errorMessage);
+    });
+
   }
 
   login() {
@@ -23,7 +28,16 @@ export class LoginComponent {
       const formData = this.loginForm.value;
       this.authService.signIn(formData.email, formData.password);
     } else {
-      this.errorMessage = "Fill in the Data Correctly"
+      this.showErrorMessage("Fill in the Data Correctly");
+    }
+  }
+
+  private showErrorMessage(message: string | null) {
+    if (message !== null) {
+      this.errorMessage = message;
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 3000);
     }
   }
 }

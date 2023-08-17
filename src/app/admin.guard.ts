@@ -22,7 +22,6 @@ export class AdminGuard implements CanActivate {
     if (this.currentUserData.role == "admin") {
       return true;
     } else {
-      // Admin değilse ana sayfaya yönlendir
       this.router.navigate(['/']);
       return false;
     }

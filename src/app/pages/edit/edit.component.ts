@@ -13,7 +13,7 @@ export class EditComponent {
   gameId: any;
 
   editForm: FormGroup;
-  errorMessage: string = '';
+  errorMessage: string | null = null;
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private firebaseService: FirebaseService) {
     this.editForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -68,7 +68,16 @@ export class EditComponent {
       this.firebaseService.updateGame(newGameData, this.gameId)
       this.router.navigate(['/game', this.gameId]);
     } else {
-      this.errorMessage = "Fill in the Data Correctly"
+      this.showErrorMessage("Fill in the Data Correctly");
+    }
+  }
+
+  private showErrorMessage(message: string | null) {
+    if (message !== null) {
+      this.errorMessage = message;
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 3000);
     }
   }
 }

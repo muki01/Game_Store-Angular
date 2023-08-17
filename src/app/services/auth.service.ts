@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  errorMessage$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>('');
   loggedUser$: BehaviorSubject<any | null> = new BehaviorSubject(null);
   constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router) {
     this.afAuth.authState.subscribe((user) => {
@@ -21,12 +22,16 @@ export class AuthService {
       const emailQuerySnapshot: any = await this.firestore.collection('users', ref => ref.where('email', '==', email)).get().toPromise();
 
       if (!usernameQuerySnapshot.empty) {
-        console.error('This username is already in use.');
+        console.log('This username is already in use.');
+        this.errorMessage$.next('This username is already in use.');
+        this.errorMessage$.next(null)
         return false;
       }
 
       if (!emailQuerySnapshot.empty) {
-        console.error('This email address is already in use.');
+        console.log('This email address is already in use.');
+        this.errorMessage$.next('This email address is already in use.');
+        this.errorMessage$.next(null)
         return false;
       }
 
@@ -47,8 +52,10 @@ export class AuthService {
       console.log("Registration Succresfully Comppleted");
       this.router.navigate(['/']);
       return true;
-    } catch (error) {
+    } catch (error: any) {
       console.error('An error occurred during registration:', error);
+      this.errorMessage$.next('An error occurred during registration.');
+      this.errorMessage$.next(null)
       return false;
     }
   }
@@ -59,8 +66,20 @@ export class AuthService {
       console.log("Login Succresfully Comppleted");
       this.router.navigate(['/']);
       return true;
-    } catch (error) {
-      console.error('An error occurred during login:', error);
+    } catch (error: any) {
+      if (error.code === 'auth/user-not-found') {
+        console.log('User not found. Please check your email.');
+        this.errorMessage$.next('User not found. Please check your email.');
+        this.errorMessage$.next(null)
+      } else if (error.code === 'auth/wrong-password') {
+        console.log('Incorrect password. Please check your password.');
+        this.errorMessage$.next('Incorrect password. Please check your password.');
+        this.errorMessage$.next(null)
+      } else {
+        console.log('An error occurred during login.');
+        this.errorMessage$.next('An error occurred during login.');
+        this.errorMessage$.next(null)
+      }
       return false;
     }
   }
@@ -71,7 +90,7 @@ export class AuthService {
       console.log("Logout Succresfully Comppleted");
       this.router.navigate(['/users/login']);
       return true;
-    } catch (error) {
+    } catch (error: any) {
       console.error('An error occurred while Logout:', error);
       return false;
     }

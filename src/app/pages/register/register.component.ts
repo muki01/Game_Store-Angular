@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  errorMessage: string = '';
+  errorMessage: string | null = null;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) {
     this.registerForm = this.formBuilder.group({
@@ -17,6 +17,10 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       repassword: ['', [Validators.required, Validators.minLength(6)]],
+    });
+
+    this.authService.errorMessage$.subscribe((errorMessage) => {
+      this.showErrorMessage(errorMessage);
     });
   }
 
@@ -26,10 +30,21 @@ export class RegisterComponent {
       if (formData.password === formData.repassword) {
         this.authService.signUp(formData.email, formData.password, formData.username);
       } else {
-        this.errorMessage = "Passwords do not match."
+        this.showErrorMessage("Passwords do not match.");
       }
     } else {
-      this.errorMessage = "Fill in the Data Correctly"
+      this.showErrorMessage("Fill in the Data Correctly");
     }
   }
+
+
+  private showErrorMessage(message: string | null) {
+    if (message !== null) {
+      this.errorMessage = message;
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 3000);
+    }
+  }
+
 }
