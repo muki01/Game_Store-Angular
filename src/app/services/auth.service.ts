@@ -45,7 +45,7 @@ export class AuthService {
           role: "user",
           balance: 200,
           purchasedGames: [],
-          image: "https://img.freepik.com/free-icon/user_318-159711.jpg?w=2000",
+          image: "https://img.freepik.com/free-icon/user_318-159711.jpg",
           title: "",
         });
       }

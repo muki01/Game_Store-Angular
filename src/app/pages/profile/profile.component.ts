@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../../services/firebase.service'
 import { AuthService } from '../../services/auth.service'
 import { ActivatedRoute } from '@angular/router';
@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   profileData: any;
   profileId: any;
   loggedUserData: any;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../../services/firebase.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./create.component.css']
 })
 
-export class CreateComponent {
+export class CreateComponent implements OnInit {
   loggedUserId: any
 
   createForm: FormGroup;
@@ -46,7 +46,7 @@ export class CreateComponent {
     };
     if (this.createForm.valid) {
       const formData = this.createForm.value;
-      newGame.name = formData.name
+      newGame.name = formData.name.toUpperCase()
       newGame.type = formData.type
       newGame.image = formData.imageURL
       newGame.description = formData.description

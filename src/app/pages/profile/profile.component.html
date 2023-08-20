@@ -43,12 +43,12 @@
             </div>
             <div class="row">
               <h2>Profile Photo: </h2>
-              <input type="text" formControlName="image" name="image" required pattern="^(https?:\/\/).*$">
+              <input type="text" formControlName="image" name="image" required pattern="^(https?:\/\/).*\.(jpg|png)$">
               <div class="validation"
                 *ngIf="editProfileForm.controls['image'].invalid && (editProfileForm.controls['image'].dirty || editProfileForm.controls['image'].touched)">
                 <div *ngIf="editProfileForm.controls['image'].hasError('required')">Image URL is required.</div>
-                <div *ngIf="editProfileForm.controls['image'].hasError('pattern')">Url must start with 'http://' or
-                  'https://'.</div>
+                <div *ngIf="editProfileForm.controls['image'].hasError('pattern')">The URL must start with "http://" or
+                  "https://" and end with ".jpg" or ".png".</div>
               </div>
             </div>
             <div class="row">
