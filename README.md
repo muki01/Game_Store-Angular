@@ -2,6 +2,8 @@
  This is my web application with Angular - a website where you can buy games at low prices. Application contains functionalities like creating and logging into your account, adding additional 
  information in the profile page. Creating, updating and deleting offers. Uses a Firebase: Firestore for the Back-End.
 
+ You can test this app in this link http://gamestore1.rf.gd
+
 # ⬇️Instalation
 Download using this code:
 ```
