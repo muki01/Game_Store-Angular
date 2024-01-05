@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../../services/firebase.service'
+import { FirestoreService } from '../../services/firestore.service'
 import { AuthService } from '../../services/auth.service'
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
   editProfileForm: FormGroup;
   errorMessage: string | null = null;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private firebaseService: FirebaseService, private route: ActivatedRoute,) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private firestoreService: FirestoreService, private route: ActivatedRoute,) {
     this.editProfileForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       image: ['', [Validators.required, Validators.pattern]],
@@ -39,11 +39,11 @@ export class ProfileComponent implements OnInit {
           }
         });
 
-        this.firebaseService.getUserById(this.profileId).subscribe((userData: any) => {
+        this.firestoreService.getUserById(this.profileId).then((userData: any) => {
           this.profileData = userData;
           this.updateFormValues();
         });
-        this.firebaseService.getPurchasedGames(this.profileId).subscribe((games: any) => {
+        this.firestoreService.getPurchasedGames(this.profileId).then((games: any) => {
           this.purchasedGames = games;
         });
       }
@@ -70,7 +70,7 @@ export class ProfileComponent implements OnInit {
       newProfileData.image = formData.image
       newProfileData.title = formData.title
 
-      await this.firebaseService.updateUser(newProfileData, this.profileId);
+      await this.firestoreService.updateUser(newProfileData, this.profileId);
     } else {
       this.showErrorMessage("Fill in the Data Correctly");
     }

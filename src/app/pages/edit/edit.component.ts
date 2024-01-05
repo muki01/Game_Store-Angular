@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FirebaseService } from '../../services/firebase.service';
+import { FirestoreService } from '../../services/firestore.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -14,7 +14,7 @@ export class EditComponent implements OnInit {
 
   editForm: FormGroup;
   errorMessage: string | null = null;
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private firebaseService: FirebaseService) {
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private firestoreService: FirestoreService) {
     this.editForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       type: ['', [Validators.required]],
@@ -29,7 +29,7 @@ export class EditComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.gameId = params.get('gameId');
       if (this.gameId) {
-        this.firebaseService.getGameById(this.gameId).subscribe((gameData: any) => {
+        this.firestoreService.getGameById(this.gameId).then((gameData: any) => {
           this.gameData = gameData;
           if (gameData) {
             this.updateFormValues();
@@ -69,7 +69,7 @@ export class EditComponent implements OnInit {
       newGameData.price = formData.price
       newGameData.downloadURL = formData.downloadURL
 
-      this.firebaseService.updateGame(newGameData, this.gameId)
+      this.firestoreService.updateGame(newGameData, this.gameId)
       this.router.navigate(['/game', this.gameId]);
     } else {
       this.showErrorMessage("Fill in the Data Correctly");

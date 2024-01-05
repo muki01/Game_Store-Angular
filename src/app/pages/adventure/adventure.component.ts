@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../../services/firebase.service';
+import { FirestoreService } from '../../services/firestore.service';
 
 @Component({
   selector: 'app-adventure',
@@ -8,16 +8,20 @@ import { FirebaseService } from '../../services/firebase.service';
 })
 export class AdventureComponent implements OnInit {
   categorizedGames: any[] = [];
-  popularGames: any[] = [];
 
-  constructor(private firebaseService: FirebaseService) { }
+  constructor(private firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
-    this.firebaseService.getGamesByCategory("adventure").subscribe((games: any[]) => {
-      this.categorizedGames = games;
-    });
-    this.firebaseService.getPopularGames(3).subscribe((games: any[]) => {
-      this.popularGames = games;
-    });
+    this.fetchGames();
+  }
+
+  async fetchGames() {
+    try {
+      this.firestoreService.getGamesByCategory("adventure").then((games: any[]) => {
+        this.categorizedGames = games;
+      });
+    } catch (error) {
+      console.error(error)
+    }
   }
 }

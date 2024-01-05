@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../../services/firebase.service';
+import { FirestoreService } from '../../services/firestore.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -16,7 +16,7 @@ export class CreateComponent implements OnInit {
   createForm: FormGroup;
   errorMessage: string | null = null;
 
-  constructor(private formBuilder: FormBuilder, private firebaseService: FirebaseService, private router: Router, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private firestoreService: FirestoreService, private router: Router, private authService: AuthService) {
     this.createForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       type: ['', [Validators.required]],
@@ -55,7 +55,7 @@ export class CreateComponent implements OnInit {
       newGame.date = new Date()
       newGame.downloadURL = formData.downloadURL
 
-      await this.firebaseService.addGame(newGame);
+      await this.firestoreService.addGame(newGame);
       this.router.navigate(['/']);
     } else {
       this.showErrorMessage("Fill in the Data Correctly");

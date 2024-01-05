@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Auth, authState, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { Firestore, getDocs, setDoc, doc, query, collection, where } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
@@ -10,36 +10,38 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
   errorMessage$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>('');
   loggedUser$: BehaviorSubject<any | null> = new BehaviorSubject(null);
-  constructor(private afAuth: AngularFireAuth, private firestore: AngularFirestore, private router: Router) {
-    this.afAuth.authState.subscribe((user) => {
+
+  constructor(private auth: Auth, private firestore: Firestore, private router: Router) {
+    authState(this.auth).subscribe(user => {
       this.loggedUser$.next(user);
     });
   }
 
   async signUp(email: string, password: string, username: string) {
     try {
-      const usernameQuerySnapshot: any = await this.firestore.collection('users', ref => ref.where('username', '==', username)).get().toPromise();
-      const emailQuerySnapshot: any = await this.firestore.collection('users', ref => ref.where('email', '==', email)).get().toPromise();
+      const userCollection = collection(this.firestore, 'users');
+      const usernameQuerySnapshot = await getDocs(query(userCollection, where('username', '==', username)));
+      const emailQuerySnapshot = await getDocs(query(userCollection, where('email', '==', email)));
 
       if (!usernameQuerySnapshot.empty) {
         console.log('This username is already in use.');
         this.errorMessage$.next('This username is already in use.');
-        this.errorMessage$.next(null)
+        this.errorMessage$.next(null);
         return;
       }
 
       if (!emailQuerySnapshot.empty) {
         console.log('This email address is already in use.');
         this.errorMessage$.next('This email address is already in use.');
-        this.errorMessage$.next(null)
+        this.errorMessage$.next(null);
         return;
       }
 
-      const authResult = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      const authResult = await createUserWithEmailAndPassword(this.auth, email, password);
       const user = authResult.user;
 
       if (user) {
-        this.firestore.collection('users').doc(user.uid).set({
+        const userData = {
           username: username,
           email: email,
           role: "user",
@@ -47,7 +49,10 @@ export class AuthService {
           purchasedGames: [],
           image: "https://img.freepik.com/free-icon/user_318-159711.jpg",
           title: "",
-        });
+        };
+
+        const userRef = doc(this.firestore, 'users', user.uid);
+        await setDoc(userRef, userData);
       }
       console.log("Registration Succresfully Comppleted");
       this.router.navigate(['/']);
@@ -62,7 +67,7 @@ export class AuthService {
 
   async signIn(email: string, password: string) {
     try {
-      await this.afAuth.signInWithEmailAndPassword(email, password);
+      await signInWithEmailAndPassword(this.auth, email, password);
       console.log("Login Succresfully Comppleted");
       this.router.navigate(['/']);
       return;
@@ -86,7 +91,7 @@ export class AuthService {
 
   async signOut() {
     try {
-      await this.afAuth.signOut();
+      await signOut(this.auth);
       console.log("Logout Succresfully Comppleted");
       this.router.navigate(['/users/login']);
       return;

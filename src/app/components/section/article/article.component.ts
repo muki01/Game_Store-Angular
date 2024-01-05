@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FirebaseService } from '../../../services/firebase.service';
+import { FirestoreService } from '../../../services/firestore.service';
 
 @Component({
   selector: 'app-article',
@@ -8,11 +8,11 @@ import { FirebaseService } from '../../../services/firebase.service';
 })
 export class ArticleComponent {
   creatorData: any = {};
-  constructor(private firebaseService: FirebaseService) { }
+  constructor(private firestoreService: FirestoreService) { }
   @Input() game: any;
 
   ngOnInit(): void {
-    this.firebaseService.getUserById(this.game.creatorId).subscribe((creatorData: any) => {
+    this.firestoreService.getUserById(this.game.creatorId).then((creatorData: any) => {
       this.creatorData = creatorData
     });
   }

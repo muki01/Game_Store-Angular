@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { FirebaseService } from '../../services/firebase.service';
+import { FirestoreService } from '../../services/firestore.service';
 
 @Component({
   selector: 'app-header',
@@ -13,14 +13,14 @@ export class HeaderComponent {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false
 
-  constructor(private authService: AuthService, private firebaseService: FirebaseService,) { }
+  constructor(private authService: AuthService, private firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
     this.authService.loggedUser$.subscribe(user => {
       this.isLoggedIn = !!user;
       this.loggedUserId = user?.uid
       if (user?.uid) {
-        this.firebaseService.getUserById(user.uid).subscribe(userData => {
+        this.firestoreService.getUserById(user.uid).then(userData => {
           this.loggedUserData = userData;
           if (this.loggedUserData.role == "admin")
             this.isAdmin = true
@@ -31,9 +31,9 @@ export class HeaderComponent {
 
   signOut() {
     this.authService.signOut();
+    this.isLoggedIn = false
+    this.isAdmin = false
   }
-
-
 
   @HostListener('click', ['$event.target'])
   onClick(target: HTMLElement) {
