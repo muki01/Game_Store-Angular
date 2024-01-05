@@ -18,9 +18,9 @@
           <img src="{{gameData.image}}" alt="{{gameData.name}}">
           <p>{{gameData.description}}</p>
           <div class="btnArea" *ngIf="loggedUserData">
-            <button *ngIf="!gamePurchased" (click)="buyGame()" class="btn"><i class="fa-regular fa-credit-card"></i>
+            <a *ngIf="!gamePurchased" (click)="buyGame()" class="btn"><i class="fa-regular fa-credit-card"></i>
               {{gameData.price}}$ Buy
-              Now</button>
+              Now</a>
             <div class="downloadArea" *ngIf="gamePurchased">
               <h2>You purchased this game!</h2>
               <a href="{{gameData.downloadURL}}" target="_blank" class="btn"><i class="fa-solid fa-download"></i>

@@ -106,11 +106,11 @@ section .btnArea {
   margin-bottom: 15px;
 }
 section .btnArea .btn {
+  display: inline-block;
   padding: 12px 20px;
   font-size: 16px;
   color: white;
   background-color: rgb(99, 202, 159);
-  border: none;
   border-radius: 6px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   cursor: pointer;

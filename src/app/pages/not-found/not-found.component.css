@@ -1,7 +1,7 @@
 main {
   height: 750px;
   display: flex;
-  background: url("../../../assets/bg-notFound.png");
+  background: url("../../../assets/bg1.png");
   background-size: cover;
   background-position: center;
 }

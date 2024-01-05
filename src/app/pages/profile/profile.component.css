@@ -4,12 +4,16 @@ main {
   height: auto;
   margin: auto;
   margin: 40px 0;
+  background: url("../../../assets/bg1.png");
+  background-size: 30%;
+  background-position: center;
 }
 
 main .main-container {
   width: 95%;
   margin: auto;
   display: grid;
+  align-items: start;
   grid-template-columns: 20% 75%;
   column-gap: 5%;
 }
@@ -19,7 +23,6 @@ main hr {
 }
 
 .sideBar {
-  height: 500px;
   background-color: white;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.18);
   border-radius: 10px;

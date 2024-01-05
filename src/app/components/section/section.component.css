@@ -17,11 +17,11 @@ section .buttonArea {
 }
 
 section .buttonArea .btn {
+  display: inline-block;
   padding: 10px;
   font-size: 16px;
   color: white;
   background-color: rgb(99, 202, 159);
-  border: none;
   border-radius: 2px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   cursor: pointer;
