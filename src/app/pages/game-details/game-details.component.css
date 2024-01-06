@@ -57,6 +57,9 @@ section .postArea .options a {
 section .postArea .options a:hover {
   color: #75dab0;
 }
+section .postArea .options a.liked{
+  color: red;
+}
 
 section .postArea hr {
   border: 2px solid #e0e0e0;

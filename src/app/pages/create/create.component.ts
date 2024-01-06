@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 
 export class CreateComponent implements OnInit {
-  loggedUserId: any
+  loggedUserId: any = ""
 
   createForm: FormGroup;
   errorMessage: string | null = null;
@@ -42,7 +42,8 @@ export class CreateComponent implements OnInit {
       price: '',
       creatorId: '',
       date: '',
-      downloadURL: ''
+      downloadURL: '',
+      likes: 0
     };
     if (this.createForm.valid) {
       const formData = this.createForm.value;

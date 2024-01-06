@@ -45,12 +45,12 @@
       <h1>Your Profile</h1>
       <hr>
       <div class="post" *ngIf="loggedUserData">
-        <a [routerLink]="['/users/profile', loggedUserId]"><img src="{{loggedUserData.image}}"></a>
+        <a [routerLink]="['/users/profile', loggedUserData.id]"><img src="{{loggedUserData.image}}"></a>
         <div class="textArea">
-          <a [routerLink]="['/users/profile', loggedUserId]">
+          <a [routerLink]="['/users/profile', loggedUserData.id]">
             <h2>{{loggedUserData.username}}</h2>
           </a>
-          <a [routerLink]="['/users/profile', loggedUserId]">
+          <a [routerLink]="['/users/profile', loggedUserData.id]">
             <h3>View complete profile</h3>
           </a>
         </div>

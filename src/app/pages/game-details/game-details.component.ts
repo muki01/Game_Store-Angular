@@ -10,41 +10,37 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./game-details.component.css']
 })
 export class GameDetailsComponent implements OnInit {
-  randomGames: any[] = [];
+  randomGames: any = [];
 
-  gameData: any = {};
-  gameId: any;
-  creatorUserData: any = {};
-
-  loggedUserId: any;
-  loggedUserData: any;
+  currentGameData: any = {};
   gamePurchased: boolean = false;
+  gameLiked: boolean = false;
+
+  creatorUserData: any = {};
+  loggedUserData: any = {};
 
   constructor(private route: ActivatedRoute, private firestoreService: FirestoreService, private router: Router, private authService: AuthService) { }
 
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.gameId = params.get('gameId');
-      if (this.gameId) {
-        this.firestoreService.getGameById(this.gameId).then((gameData: any) => {
-          this.gameData = gameData;
-          if (this.gameData) {
-            this.firestoreService.getUserById(this.gameData.creatorId).then((userData: any) => {
-              this.creatorUserData = userData;
-            });
-            this.authService.loggedUser$.subscribe(user => {
-              this.loggedUserId = user?.uid
-              if (this.loggedUserId) {
-                this.firestoreService.getUserById(this.loggedUserId).then((userData: any) => {
-                  this.loggedUserData = userData;
-                  this.gamePurchased = !!this.loggedUserData.purchasedGames.includes(this.gameId)
-                });
-              }
-            });
-          } else {
-            this.router.navigate(['/']);
-          }
+      const gameId = params.get('gameId');
+      if (gameId) {
+        this.firestoreService.getGameById(gameId).then((gameData: any) => {
+          this.currentGameData = { id: gameId, ...gameData };
+          this.firestoreService.getUserById(this.currentGameData.creatorId).then((userData: any) => {
+            this.creatorUserData = userData;
+          });
+          this.authService.loggedUser$.subscribe(user => {
+            const userId = user?.uid
+            if (userId) {
+              this.firestoreService.getUserById(userId).then((userData: any) => {
+                this.loggedUserData = { id: userId, ...userData };
+                this.gamePurchased = !!this.loggedUserData.purchasedGames.includes(this.currentGameData.id)
+                this.gameLiked = !!this.loggedUserData.likedGames.includes(this.currentGameData.id)
+              });
+            }
+          });
         });
       }
     });
@@ -54,28 +50,45 @@ export class GameDetailsComponent implements OnInit {
     });
   }
 
+  async likeGame() {
+    if (this.gameLiked) {
+      this.loggedUserData.likedGames = this.loggedUserData.likedGames.filter((likedGame: any) => likedGame !== this.currentGameData.id);
+      this.currentGameData.likes = this.currentGameData.likes - 1;
+      this.gameLiked = false
+      console.log("Unliked Successfully")
+    } else {
+      this.loggedUserData.likedGames.push(this.currentGameData.id);
+      this.currentGameData.likes = this.currentGameData.likes + 1;
+      this.gameLiked = true
+      console.log("Liked Successfully")
+    }
+
+    await this.firestoreService.updateGame({ likes: this.currentGameData.likes }, this.currentGameData.id);
+    await this.firestoreService.updateUser({ likedGames: this.loggedUserData.likedGames }, this.loggedUserData.id);
+  }
+
   editGame() {
-    if (this.gameData && this.gameId) {
-      this.router.navigate(['/edit', this.gameId]);
+    if (this.currentGameData && this.currentGameData.id) {
+      this.router.navigate(['/edit', this.currentGameData.id]);
     } else {
       console.error("Game ID is missing or undefined.");
     }
   }
 
   deleteGame() {
-    this.firestoreService.deleteGame(this.gameId)
+    this.firestoreService.deleteGame(this.currentGameData.id)
     this.router.navigate(['/']);
   }
 
   async buyGame() {
     try {
       const userBalance = this.loggedUserData?.balance || 0;
-      const gamePrice = this.gameData?.price || 0;
+      const gamePrice = this.currentGameData?.price || 0;
 
       if (userBalance >= gamePrice) {
         const updatedBalance = userBalance - gamePrice;
-        await this.firestoreService.updateBalance(this.loggedUserId, updatedBalance);
-        await this.firestoreService.addToPurchasedGames(this.loggedUserId, this.gameId);
+        await this.firestoreService.updateBalance(this.loggedUserData.id, updatedBalance);
+        await this.firestoreService.addToPurchasedGames(this.loggedUserData.id, this.currentGameData.id);
         console.log("Successfully Bought Game");
         this.gamePurchased = true;
       } else {

@@ -1,29 +1,37 @@
 <main id="main">
   <div class="main-container">
-    <section *ngIf="gameData">
+    <section *ngIf="currentGameData">
       <div class="postArea">
         <div class="container">
           <div class="textArea">
-            <h1>{{gameData.name}}</h1>
-            <div class="options" *ngIf="loggedUserData && loggedUserData.role == 'admin'">
-              <a (click)="editGame()"> <i class="fa-solid fa-pencil"></i> Edit </a>
-              <a (click)="deleteGame()"><i class="fa-solid fa-trash-can"></i> Remove </a>
+            <h1>{{currentGameData.name}}</h1>
+            <div class="options">
+              <ng-container *ngIf="loggedUserData && loggedUserData.role == 'admin'">
+                <a (click)="editGame()"> <i class="fa-solid fa-pencil"></i> Edit </a>
+                <a (click)="deleteGame()"><i class="fa-solid fa-trash-can"></i> Remove </a>
+              </ng-container>
+              <ng-container *ngIf="!gameLiked ; else Liked">
+                <a (click)="likeGame()"><i class="fa-regular fa-heart"></i> Like </a>
+              </ng-container>
+              <ng-template #Liked>
+                <a (click)="likeGame()" class="liked"><i class="fa-solid fa-heart"></i> Liked </a>
+              </ng-template>
             </div>
           </div>
           <hr>
-          <h2><i class="fas fa-user"></i><a [routerLink]="['/users/profile', gameData.creatorId]">
+          <h2><i class="fas fa-user"></i><a [routerLink]="['/users/profile', currentGameData.creatorId]">
               {{creatorUserData.username}}
             </a><i class="far fa-clock"></i>
-            {{ gameData.date ? (gameData.date.toDate() | date:'MMMM, dd yyyy') : '' }}</h2>
-          <img src="{{gameData.image}}" alt="{{gameData.name}}">
-          <p>{{gameData.description}}</p>
+            {{ currentGameData.date ? (currentGameData.date.toDate() | date:'MMMM, dd yyyy') : '' }}</h2>
+          <img src="{{currentGameData.image}}" alt="{{currentGameData.name}}">
+          <p>{{currentGameData.description}}</p>
           <div class="btnArea" *ngIf="loggedUserData">
             <a *ngIf="!gamePurchased" (click)="buyGame()" class="btn"><i class="fa-regular fa-credit-card"></i>
-              {{gameData.price}}$ Buy
+              {{currentGameData.price}}$ Buy
               Now</a>
             <div class="downloadArea" *ngIf="gamePurchased">
               <h2>You purchased this game!</h2>
-              <a href="{{gameData.downloadURL}}" target="_blank" class="btn"><i class="fa-solid fa-download"></i>
+              <a href="{{currentGameData.downloadURL}}" target="_blank" class="btn"><i class="fa-solid fa-download"></i>
                 Download</a>
             </div>
           </div>

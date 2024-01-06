@@ -47,7 +47,7 @@ export class FirestoreService {
   async getPopularGames(limit: number) {
     try {
       const gamesCollection = collection(this.firestore, 'games');
-      const gamesQuery = query(gamesCollection, orderBy('date', 'asc'));
+      const gamesQuery = query(gamesCollection, orderBy('likes', 'desc'));
       const gamesSnapshot = await getDocs(gamesQuery);
 
       const gameDataArray: any = [];

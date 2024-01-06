@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./section.component.css']
 })
 export class SectionComponent {
-  @Input() categorizedGames: any[] = [];
+  @Input() categorizedGames: any = [];
 }

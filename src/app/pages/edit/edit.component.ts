@@ -10,7 +10,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class EditComponent implements OnInit {
   gameData: any = {};
-  gameId: any;
 
   editForm: FormGroup;
   errorMessage: string | null = null;
@@ -27,10 +26,10 @@ export class EditComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      this.gameId = params.get('gameId');
-      if (this.gameId) {
-        this.firestoreService.getGameById(this.gameId).then((gameData: any) => {
-          this.gameData = gameData;
+      const gameId = params.get('gameId');
+      if (gameId) {
+        this.firestoreService.getGameById(gameId).then((gameData: any) => {
+          this.gameData = {id:gameId, ...gameData};
           if (gameData) {
             this.updateFormValues();
           } else {
@@ -69,8 +68,8 @@ export class EditComponent implements OnInit {
       newGameData.price = formData.price
       newGameData.downloadURL = formData.downloadURL
 
-      this.firestoreService.updateGame(newGameData, this.gameId)
-      this.router.navigate(['/game', this.gameId]);
+      this.firestoreService.updateGame(newGameData, this.gameData.id)
+      this.router.navigate(['/game', this.gameData.id]);
     } else {
       this.showErrorMessage("Fill in the Data Correctly");
     }

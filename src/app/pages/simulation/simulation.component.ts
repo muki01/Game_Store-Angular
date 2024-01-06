@@ -17,7 +17,7 @@ export class SimulationComponent implements OnInit {
 
   async fetchGames() {
     try {
-      this.firestoreService.getGamesByCategory("simulation").then((games: any[]) => {
+      this.firestoreService.getGamesByCategory("simulation").then((games: any) => {
         this.categorizedGames = games;
       });
     } catch (error) {

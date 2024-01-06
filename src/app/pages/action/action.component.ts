@@ -17,7 +17,7 @@ export class ActionComponent implements OnInit {
 
   async fetchGames() {
     try {
-      this.firestoreService.getGamesByCategory("action").then((games: any[]) => {
+      this.firestoreService.getGamesByCategory("action").then((games: any) => {
         this.categorizedGames = games;
       });
     } catch (error) {

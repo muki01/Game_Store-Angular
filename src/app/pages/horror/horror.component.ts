@@ -18,7 +18,7 @@ export class HorrorComponent implements OnInit {
 
   async fetchGames() {
     try {
-      this.firestoreService.getGamesByCategory("horror").then((games: any[]) => {
+      this.firestoreService.getGamesByCategory("horror").then((games: any) => {
         this.categorizedGames = games;
       });
     } catch (error) {

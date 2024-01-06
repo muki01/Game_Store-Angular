@@ -16,7 +16,7 @@ export class SearchComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       const searchText = params['q'];
       if (searchText) {
-        this.firestoreService.searchGames(searchText).then((games: any[]) => {
+        this.firestoreService.searchGames(searchText).then((games: any) => {
           this.searchedGames = games;
         });
       }

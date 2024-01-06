@@ -17,7 +17,7 @@ export class SurvivalComponent implements OnInit {
 
   async fetchGames() {
     try {
-      this.firestoreService.getGamesByCategory("survival").then((games: any[]) => {
+      this.firestoreService.getGamesByCategory("survival").then((games: any) => {
         this.categorizedGames = games;
       });
     } catch (error) {

@@ -17,7 +17,7 @@ export class AdventureComponent implements OnInit {
 
   async fetchGames() {
     try {
-      this.firestoreService.getGamesByCategory("adventure").then((games: any[]) => {
+      this.firestoreService.getGamesByCategory("adventure").then((games: any) => {
         this.categorizedGames = games;
       });
     } catch (error) {

@@ -9,12 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./aside.component.css']
 })
 export class AsideComponent {
-  popularGames:any[] = [];
-  loggedUserData: any;
-  loggedUserId: any;
-  isLoggedIn: boolean = false;
+  popularGames:any = [];
+  loggedUserData: any = {};
   searchText: string = '';
-  searchedGames: any[] = [];
+  searchedGames: any = [];
+  isLoggedIn: boolean = false;
 
   constructor(private authService: AuthService, private router: Router, private firestoreService: FirestoreService) { }
 
@@ -40,10 +39,10 @@ export class AsideComponent {
     try {
       this.authService.loggedUser$.subscribe(user => {
         this.isLoggedIn = !!user;
-        this.loggedUserId = user?.uid
-        if (user?.uid) {
-          this.firestoreService.getUserById(this.loggedUserId).then((userData) => {
-            this.loggedUserData = userData;
+        const loggedUserId = user?.uid
+        if (loggedUserId) {
+          this.firestoreService.getUserById(loggedUserId).then((userData) => {
+            this.loggedUserData = {id:loggedUserId, ...userData};
           })
         }
       });

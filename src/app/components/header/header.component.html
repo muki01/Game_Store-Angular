@@ -6,11 +6,11 @@
         <h1><span class="highlight">Game</span> Store</h1>
       </a>
     </div>
-    <div class="menuArea">
+    <div class="menuArea" (click)="navToggle()">
       <i class="fa fa-bars menuBtn"></i>
     </div>
     <div class="navBar">
-      <ul>
+      <ul (click)="navCloser()">
         <li><a routerLink="/" class="active">🏠Home</a></li>
         <li><a routerLink="/games/action">🏹Action</a></li>
         <li><a routerLink="/games/adventure">🔑Adventure</a></li>
@@ -22,7 +22,7 @@
         <ng-container *ngIf="isLoggedIn">
           <li *ngIf="isAdmin"><a routerLink="/games/create">✍🏻 Create post</a></li>
           <li><a (click)="signOut()">🚪LogOut</a></li>
-          <li><a [routerLink]="['/users/profile', loggedUserId]">👨‍💻 My Profile</a></li>
+          <li><a [routerLink]="['/users/profile', loggedUserData.id]">👨‍💻 My Profile</a></li>
         </ng-container>
         <ng-container *ngIf="!isLoggedIn">
           <li><a routerLink="/users/login">🔑 LogIn</a></li>

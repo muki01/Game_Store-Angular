@@ -10,11 +10,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  profileData: any;
-  profileId: any;
-  loggedUserData: any;
-  loggedUserId: any;
-  purchasedGames: any[] = [];
+  profileData: any = {};
+  purchasedGames: any = [];
   isYourProfile: boolean = false;
 
   editProfileForm: FormGroup;
@@ -30,20 +27,20 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.profileId = params.get('userId');
-      if (this.profileId) {
+      const profileId = params.get('userId');
+      if (profileId) {
         this.authService.loggedUser$.subscribe(user => {
-          this.loggedUserId = user?.uid;
-          if (this.loggedUserId) {
-            this.isYourProfile = !!(this.profileId == this.loggedUserId);
+          const loggedUserId = user?.uid;
+          if (loggedUserId) {
+            this.isYourProfile = !!(profileId == loggedUserId);
           }
         });
 
-        this.firestoreService.getUserById(this.profileId).then((userData: any) => {
-          this.profileData = userData;
+        this.firestoreService.getUserById(profileId).then((userData: any) => {
+          this.profileData = { id: profileId, ...userData };
           this.updateFormValues();
         });
-        this.firestoreService.getPurchasedGames(this.profileId).then((games: any) => {
+        this.firestoreService.getPurchasedGames(profileId).then((games: any) => {
           this.purchasedGames = games;
         });
       }
@@ -70,7 +67,7 @@ export class ProfileComponent implements OnInit {
       newProfileData.image = formData.image
       newProfileData.title = formData.title
 
-      await this.firestoreService.updateUser(newProfileData, this.profileId);
+      await this.firestoreService.updateUser(newProfileData, this.profileData.id);
     } else {
       this.showErrorMessage("Fill in the Data Correctly");
     }

@@ -17,7 +17,7 @@ export class RacingComponent implements OnInit {
 
   async fetchGames() {
     try {
-      this.firestoreService.getGamesByCategory("racing").then((games: any[]) => {
+      this.firestoreService.getGamesByCategory("racing").then((games: any) => {
         this.categorizedGames = games;
       });
     } catch (error) {

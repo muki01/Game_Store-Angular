@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FirestoreService } from '../../services/firestore.service';
 
@@ -8,8 +8,7 @@ import { FirestoreService } from '../../services/firestore.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  loggedUserId: any;
-  loggedUserData: any;
+  loggedUserData: any = {};
   isLoggedIn: boolean = false;
   isAdmin: boolean = false
 
@@ -17,11 +16,11 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     this.authService.loggedUser$.subscribe(user => {
-      this.isLoggedIn = !!user;
-      this.loggedUserId = user?.uid
-      if (user?.uid) {
-        this.firestoreService.getUserById(user.uid).then(userData => {
-          this.loggedUserData = userData;
+      const loggedUserId = user?.uid
+      if (loggedUserId) {
+        this.isLoggedIn = !!user;
+        this.firestoreService.getUserById(loggedUserId).then(userData => {
+          this.loggedUserData = {id:loggedUserId, ...userData};
           if (this.loggedUserData.role == "admin")
             this.isAdmin = true
         });
@@ -35,26 +34,19 @@ export class HeaderComponent {
     this.isAdmin = false
   }
 
-  @HostListener('click', ['$event.target'])
-  onClick(target: HTMLElement) {
-    if (target.classList.contains('menuBtn')) {
-      this.navToggle();
+  navToggle() {
+    const navBar = document.querySelector('.navBar') as HTMLElement;
+    navBar.classList.toggle('open');
+    if (navBar.classList.contains('open')) {
+      navBar.style.maxHeight = navBar.scrollHeight + 'px';
+    } else {
+      navBar.removeAttribute('style');
     }
   }
-  navToggle() {
-    const menuBtn = document.querySelector('.menuBtn');
-    if (menuBtn) {
-      menuBtn.classList.toggle('active');
-    }
 
+  navCloser(){
     const navBar = document.querySelector('.navBar') as HTMLElement;
-    if (navBar) {
-      navBar.classList.toggle('open');
-      if (navBar.classList.contains('open')) {
-        navBar.style.maxHeight = navBar.scrollHeight + 'px';
-      } else {
-        navBar.removeAttribute('style');
-      }
-    }
+    navBar.classList.remove('open');
+    navBar.removeAttribute('style');
   }
 }
