@@ -30,7 +30,7 @@ export class FirestoreService {
   async getGamesByCategory(category: string) {
     try {
       const gamesCollection = collection(this.firestore, 'games');
-      const queryCondition = query(gamesCollection, where('type', '==', category), orderBy('date', 'desc'))
+      const queryCondition = query(gamesCollection, where('category', '==', category), orderBy('date', 'desc'))
       const gamesSnapshot = await getDocs(queryCondition);
 
       const gameDataArray: any = [];

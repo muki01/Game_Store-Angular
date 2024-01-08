@@ -14,9 +14,9 @@
           </div>
         </div>
 
-        <label>Game Type</label>
-        <select name="type" formControlName="type" required>
-          <option disabled selected value="">Select Game Type</option>
+        <label>Category</label>
+        <select name="category" formControlName="category" required>
+          <option disabled selected value="">Select Category</option>
           <option value="action">Action</option>
           <option value="adventure">Adventure</option>
           <option value="simulation">Simulation</option>
@@ -26,8 +26,8 @@
           <option value="horror">Horror</option>
         </select>
         <div class="validation"
-          *ngIf="createForm.controls['type'].invalid && (createForm.controls['type'].dirty || createForm.controls['type'].touched)">
-          <div *ngIf="createForm.controls['type'].hasError('required')">Game Type is required.</div>
+          *ngIf="createForm.controls['category'].invalid && (createForm.controls['category'].dirty || createForm.controls['category'].touched)">
+          <div *ngIf="createForm.controls['category'].hasError('required')">Category is required.</div>
         </div>
 
         <label>Image URL</label>

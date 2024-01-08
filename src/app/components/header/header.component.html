@@ -20,13 +20,13 @@
         <li><a routerLink="/games/racing">🚗Racing</a></li>
         <li><a routerLink="/games/horror">💀Horror</a></li>
         <ng-container *ngIf="isLoggedIn">
-          <li *ngIf="isAdmin"><a routerLink="/games/create">✍🏻 Create post</a></li>
+          <li *ngIf="isAdmin"><a routerLink="/game/create">✍🏻Create post</a></li>
           <li><a (click)="signOut()">🚪LogOut</a></li>
-          <li><a [routerLink]="['/users/profile', loggedUserData.id]">👨‍💻 My Profile</a></li>
+          <li><a [routerLink]="['/users/profile', loggedUserData.id]">👨‍💻My Profile</a></li>
         </ng-container>
         <ng-container *ngIf="!isLoggedIn">
-          <li><a routerLink="/users/login">🔑 LogIn</a></li>
-          <li><a routerLink="/users/register">✍🏻 Register</a></li>
+          <li><a routerLink="/users/login">🔑LogIn</a></li>
+          <li><a routerLink="/users/register">✍🏻Register</a></li>
         </ng-container>
       </ul>
     </div>

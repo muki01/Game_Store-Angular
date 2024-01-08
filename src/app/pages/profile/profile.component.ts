@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
   editProfileForm: FormGroup;
   errorMessage: string | null = null;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private firestoreService: FirestoreService, private route: ActivatedRoute,) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private firestoreService: FirestoreService, private route: ActivatedRoute) {
     this.editProfileForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       image: ['', [Validators.required, Validators.pattern]],

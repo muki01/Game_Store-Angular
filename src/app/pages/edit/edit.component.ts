@@ -16,7 +16,7 @@ export class EditComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private firestoreService: FirestoreService) {
     this.editForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      type: ['', [Validators.required]],
+      category: ['', [Validators.required]],
       imageURL: ['', [Validators.required, Validators.pattern]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       price: ['', [Validators.required, Validators.nullValidator]],
@@ -42,7 +42,7 @@ export class EditComponent implements OnInit {
   updateFormValues() {
     this.editForm.patchValue({
       name: this.gameData.name,
-      type: this.gameData.type,
+      category: this.gameData.category,
       imageURL: this.gameData.image,
       description: this.gameData.description,
       price: this.gameData.price,
@@ -53,7 +53,7 @@ export class EditComponent implements OnInit {
   saveGame() {
     const newGameData: any = {
       name: '',
-      type: '',
+      category: '',
       image: '',
       description: '',
       price: '',
@@ -62,7 +62,7 @@ export class EditComponent implements OnInit {
     if (this.editForm.valid) {
       const formData = this.editForm.value;
       newGameData.name = formData.name
-      newGameData.type = formData.type
+      newGameData.category = formData.category
       newGameData.image = formData.imageURL
       newGameData.description = formData.description
       newGameData.price = formData.price

@@ -19,7 +19,7 @@ export class CreateComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private firestoreService: FirestoreService, private router: Router, private authService: AuthService) {
     this.createForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      type: ['', [Validators.required]],
+      category: ['', [Validators.required]],
       imageURL: ['', [Validators.required, Validators.pattern]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       price: ['', [Validators.required, Validators.nullValidator]],
@@ -36,7 +36,7 @@ export class CreateComponent implements OnInit {
   async createGame() {
     const newGame: any = {
       name: '',
-      type: '',
+      category: '',
       image: '',
       description: '',
       price: '',
@@ -48,7 +48,7 @@ export class CreateComponent implements OnInit {
     if (this.createForm.valid) {
       const formData = this.createForm.value;
       newGame.name = formData.name.toUpperCase()
-      newGame.type = formData.type
+      newGame.category = formData.category
       newGame.image = formData.imageURL
       newGame.description = formData.description
       newGame.price = formData.price
