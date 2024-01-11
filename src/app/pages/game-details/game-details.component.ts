@@ -19,6 +19,8 @@ export class GameDetailsComponent implements OnInit {
   creatorUserData: any = {};
   loggedUserData: any = {};
 
+  errorMessage: string | null = null;
+
   constructor(private route: ActivatedRoute, private firestoreService: FirestoreService, private router: Router, private authService: AuthService) { }
 
 
@@ -92,10 +94,20 @@ export class GameDetailsComponent implements OnInit {
         console.log("Successfully Bought Game");
         this.gamePurchased = true;
       } else {
-        console.error('Insufficient balance.');
+        this.showErrorMessage('Insufficient balance !')
+        console.error('Insufficient balance !');
       }
     } catch (error) {
       console.error('An error occurred while purchasing the game:', error);
+    }
+  }
+
+  private showErrorMessage(message: string | null) {
+    if (message !== null) {
+      this.errorMessage = message;
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 3000);
     }
   }
 }
