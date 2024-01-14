@@ -20,7 +20,7 @@ export class HeaderComponent {
       if (loggedUserId) {
         this.isLoggedIn = !!user;
         this.firestoreService.getUserById(loggedUserId).then(userData => {
-          this.loggedUserData = {id:loggedUserId, ...userData};
+          this.loggedUserData = { id: loggedUserId, ...userData };
           if (this.loggedUserData.role == "admin")
             this.isAdmin = true
         });
@@ -44,7 +44,7 @@ export class HeaderComponent {
     }
   }
 
-  navCloser(){
+  navCloser() {
     const navBar = document.querySelector('.navBar') as HTMLElement;
     navBar.classList.remove('open');
     navBar.removeAttribute('style');

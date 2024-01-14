@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./aside.component.css']
 })
 export class AsideComponent {
-  popularGames:any = [];
+  popularGames: any = [];
   loggedUserData: any = {};
   searchText: string = '';
   searchedGames: any = [];
@@ -42,7 +42,7 @@ export class AsideComponent {
         const loggedUserId = user?.uid
         if (loggedUserId) {
           this.firestoreService.getUserById(loggedUserId).then((userData) => {
-            this.loggedUserData = {id:loggedUserId, ...userData};
+            this.loggedUserData = { id: loggedUserId, ...userData };
           })
         }
       });

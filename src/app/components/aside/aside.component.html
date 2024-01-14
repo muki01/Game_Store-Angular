@@ -17,7 +17,8 @@
       <h1>Search</h1>
       <hr>
       <div class="post">
-        <input placeholder="Search this website" [(ngModel)]="searchText" (keydown.enter)="navigateToSearch()" type="text">
+        <input placeholder="Search this website" [(ngModel)]="searchText" (keydown.enter)="navigateToSearch()"
+          type="text">
         <a (click)="navigateToSearch()">Search</a>
       </div>
     </div>
@@ -44,7 +45,7 @@
     <div class="container">
       <h1>Your Profile</h1>
       <hr>
-      <div class="post" *ngIf="loggedUserData">
+      <div class="post" *ngIf="isLoggedIn">
         <a [routerLink]="['/users/profile', loggedUserData.id]"><img src="{{loggedUserData.image}}"></a>
         <div class="textArea">
           <a [routerLink]="['/users/profile', loggedUserData.id]">
@@ -55,7 +56,7 @@
           </a>
         </div>
       </div>
-      <div class="notLoggedin" *ngIf="!loggedUserData">
+      <div class="notLoggedin" *ngIf="!isLoggedIn">
         <h2>Not Logged In</h2>
       </div>
     </div>

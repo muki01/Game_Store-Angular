@@ -14,12 +14,12 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      const categoryName:any = params.get('categoryName');
+      const categoryName: any = params.get('categoryName');
       this.fetchGames(categoryName)
     })
   }
 
-  async fetchGames(categoryName:string) {
+  async fetchGames(categoryName: string) {
     try {
       this.firestoreService.getGamesByCategory(categoryName).then((games: any) => {
         this.categorizedGames = games;

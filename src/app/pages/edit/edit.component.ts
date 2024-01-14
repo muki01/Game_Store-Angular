@@ -29,7 +29,7 @@ export class EditComponent implements OnInit {
       const gameId = params.get('gameId');
       if (gameId) {
         this.firestoreService.getGameById(gameId).then((gameData: any) => {
-          this.gameData = {id:gameId, ...gameData};
+          this.gameData = { id: gameId, ...gameData };
           if (gameData) {
             this.updateFormValues();
           } else {

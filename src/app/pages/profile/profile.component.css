@@ -40,14 +40,14 @@ main hr {
   font-size: 24px;
   font-weight: bold;
   font-family: "Poppins", sans-serif;
-  overflow-wrap: break-word
+  overflow-wrap: break-word;
 }
 .sideBar h2 {
   text-align: center;
   font-family: "Open Sans", sans-serif;
   font-weight: bold;
   font-size: 14px;
-  overflow-wrap: break-word
+  overflow-wrap: break-word;
 }
 
 section .myGamesArea {
