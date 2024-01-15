@@ -10,7 +10,8 @@ import { FirestoreService } from '../../services/firestore.service';
 export class HeaderComponent {
   loggedUserData: any = {};
   isLoggedIn: boolean = false;
-  isAdmin: boolean = false
+  isAdmin: boolean = false;
+  isCreator: boolean = false;
 
   constructor(private authService: AuthService, private firestoreService: FirestoreService) { }
 
@@ -21,8 +22,11 @@ export class HeaderComponent {
         this.isLoggedIn = !!user;
         this.firestoreService.getUserById(loggedUserId).then(userData => {
           this.loggedUserData = { id: loggedUserId, ...userData };
-          if (this.loggedUserData.role == "admin")
+          if (this.loggedUserData.role == "admin"){
             this.isAdmin = true
+          }else if(this.loggedUserData.role == "creator"){
+            this.isCreator = true
+          }
         });
       }
     });
@@ -32,6 +36,7 @@ export class HeaderComponent {
     this.authService.signOut();
     this.isLoggedIn = false
     this.isAdmin = false
+    this.isCreator = false
   }
 
   navToggle() {

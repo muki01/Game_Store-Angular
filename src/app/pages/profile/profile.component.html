@@ -6,6 +6,7 @@
         <img src="{{profileData.image}}" alt="">
         <h1>{{ profileData.username }}</h1>
         <h2>{{ profileData.email}}</h2>
+        <h3>Role: {{ profileData.role}}</h3>
         <h2 *ngIf="isYourProfile == true">💵Balance: {{profileData.balance}}$</h2>
         <p>{{profileData.title}}</p>
       </div>

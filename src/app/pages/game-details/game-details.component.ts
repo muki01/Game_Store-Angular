@@ -16,6 +16,9 @@ export class GameDetailsComponent implements OnInit {
   gamePurchased: boolean = false;
   gameLiked: boolean = false;
 
+  isAdmin:boolean = false;
+  isCreator:boolean = false;
+
   creatorUserData: any = {};
   loggedUserData: any = {};
 
@@ -40,6 +43,12 @@ export class GameDetailsComponent implements OnInit {
                 this.loggedUserData = { id: userId, ...userData };
                 this.gamePurchased = !!this.loggedUserData.purchasedGames.includes(this.currentGameData.id)
                 this.gameLiked = !!this.loggedUserData.likedGames.includes(this.currentGameData.id)
+                if( this.loggedUserData.id == this.currentGameData.creatorId){
+                  this.isCreator = true;
+                }
+                if( this.loggedUserData.role == "admin"){
+                  this.isAdmin = true;
+                }
               });
             }
           });
