@@ -23,15 +23,16 @@ localhost:4200
 ```
 
 # 👨‍💻Test Profiles
-* elon123@gmail.com pass: 123456; (Admin)
+I will not give an account that is an administrator because there are people who delete all posts. 😁
+* elon123@gmail.com pass: 123456; (Creator)
 * tony123@gmail.com pass: 123456; (User)
 
 # Navigation
 * Not logged in user
   ![header](https://github.com/muki01/Game_Store-Angular/assets/75759731/a0407578-f0e8-4bc6-8660-659ae16743c2)
-* Logged-in user (not Admin)
+* Logged-in user (not Admin and not Creator)
   ![header](https://github.com/muki01/Game_Store-Angular/assets/75759731/bd0c5b7a-f9b8-4fa8-ade1-3cfb398ef83f)
-* Logged-in user (Admin)
+* Logged-in user (Admin or Creator)
   ![header](https://github.com/muki01/Game_Store-Angular/assets/75759731/eec49e57-258f-4c63-8d85-e6fee17f33ad)
 
 # Home Page
@@ -59,7 +60,7 @@ The users registers in with username, email, password and confirm password. Vali
 ![Register](https://github.com/muki01/Game_Store-Angular/assets/75759731/50dcced8-0fbc-47f6-9b19-a7bab3d427d1)
 
 # Create new game
-Page only available for logged in Admin users.
+Page only available for logged in Admin and Creator users.
 Create offer form expects as input: name, gameType, imageURL, description, price and downloadURL for the game.
 * Name should be at least 3 characters.
 * Descrition should be at least 10 characters.
@@ -86,18 +87,19 @@ This is one of the categorized games pages. This page contains only the selected
 
 # Details Page
 This page contains the details for each game offer.
-Where logged in users can buy and download the game
-If logged in users is Admin, can edit or delete the offer.
+Where logged in users can like, buy and download the game
+If logged in users is Admin, can edit or delete all posts.
+If the logged in user is a Creator, they can only edit or delete posts they created.
 
 * Not Logged in user
   
 ![Game Details (Not logged)](https://github.com/muki01/Game_Store-Angular/assets/75759731/3da4f225-7159-44ce-be7b-1ab19b841979)
 
-* Logged in user (Not Admin)
+* Logged in user (Not Admin or Creator)
   
   ![Game Details](https://github.com/muki01/Game_Store-Angular/assets/75759731/3dfe9ccd-0889-4a0b-8c2d-c3bbeb3e1b40)
 
-* Logged in user (Admin)
+* Logged in user (Admin and Creator)
 
 ![Remo,Edit Btns](https://github.com/muki01/Game_Store-Angular/assets/75759731/7ec93b97-63ea-425d-af12-07b2c467ad3c)
 
@@ -107,7 +109,7 @@ If logged in users is Admin, can edit or delete the offer.
 
 
 # Edit Page
-Edit page where logged in Admin users can update Game offers
+Edit page where logged in Admin or Creator users can update Game offers
 
 ![Edit Page](https://github.com/muki01/Game_Store-Angular/assets/75759731/7e5fc282-243a-4365-8e43-33744254133c)
 
