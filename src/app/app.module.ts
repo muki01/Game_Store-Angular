@@ -18,6 +18,7 @@ import { SectionComponent } from './components/section/section.component';
 import { ArticleComponent } from './components/section/article/article.component';
 import { AsideComponent } from './components/aside/aside.component';
 import { ErrorComponent } from './components/error/error.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 import { HomeComponent } from './pages/home/home.component';
 import { CategoryComponent } from './pages/category/category.component';
@@ -40,6 +41,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     ArticleComponent,
     AsideComponent,
     ErrorComponent,
+    SpinnerComponent,
     HomeComponent,
     CategoryComponent,
     LoginComponent,

@@ -15,17 +15,22 @@
       <div class="myGamesArea">
         <h1>Purchased Games</h1>
         <hr>
-        <div class="postContainer" *ngIf="purchasedGames">
-          <div class="post" *ngFor="let purchasedGames of purchasedGames">
-            <a [routerLink]="['/game', purchasedGames.id]"><img src="{{purchasedGames.image}}"></a>
-            <a [routerLink]="['/game', purchasedGames.id]">
-              <h2>{{purchasedGames.name}}</h2>
-            </a>
+        <ng-container *ngIf="isLoading">
+          <app-spinner></app-spinner>
+        </ng-container>
+        <ng-container *ngIf="!isLoading">
+          <div class="postContainer" *ngIf="purchasedGames">
+            <div class="post" *ngFor="let purchasedGames of purchasedGames">
+              <a [routerLink]="['/game', purchasedGames.id]"><img src="{{purchasedGames.image}}"></a>
+              <a [routerLink]="['/game', purchasedGames.id]">
+                <h2>{{purchasedGames.name}}</h2>
+              </a>
+            </div>
           </div>
-        </div>
-        <div class="noGames" *ngIf="purchasedGames.length==0">
-          <h2>No Games</h2>
-        </div>
+          <div class="noGames" *ngIf="purchasedGames.length==0">
+            <h2>No Games</h2>
+          </div>
+        </ng-container>
       </div>
       <div class="settingsArea" *ngIf="isYourProfile == true">
         <h1>Settings</h1>

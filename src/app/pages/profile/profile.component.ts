@@ -14,6 +14,8 @@ export class ProfileComponent implements OnInit {
   purchasedGames: any = [];
   isYourProfile: boolean = false;
 
+  isLoading: boolean = true;
+
   editProfileForm: FormGroup;
   errorMessage: string | null = null;
 
@@ -42,6 +44,7 @@ export class ProfileComponent implements OnInit {
         });
         this.firestoreService.getPurchasedGames(profileId).then((games: any) => {
           this.purchasedGames = games;
+          this.isLoading = false;
         });
       }
     });
