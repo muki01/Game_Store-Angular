@@ -15,6 +15,9 @@ export class AsideComponent {
   searchedGames: any = [];
   isLoggedIn: boolean = false;
 
+  isLoadingGames: boolean = true
+  isLoadingUserData: boolean = true
+
   constructor(private authService: AuthService, private router: Router, private firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
@@ -30,6 +33,7 @@ export class AsideComponent {
   async fetchPopularGames() {
     try {
       this.popularGames = await this.firestoreService.getPopularGames(3);
+      this.isLoadingGames = false
     } catch (error) {
       console.error(error)
     }
@@ -43,6 +47,7 @@ export class AsideComponent {
         if (loggedUserId) {
           this.firestoreService.getUserById(loggedUserId).then((userData) => {
             this.loggedUserData = { id: loggedUserId, ...userData };
+            this.isLoadingUserData = false
           })
         }
       });

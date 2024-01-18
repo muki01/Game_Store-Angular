@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CategoryComponent implements OnInit {
   categorizedGames: any[] = [];
+  isLoadingGames:boolean = true;
 
   constructor(private firestoreService: FirestoreService, private route: ActivatedRoute) { }
 
@@ -21,8 +22,9 @@ export class CategoryComponent implements OnInit {
 
   async fetchGames(categoryName: string) {
     try {
-      this.firestoreService.getGamesByCategory(categoryName).then((games: any) => {
+      await this.firestoreService.getGamesByCategory(categoryName).then((games: any) => {
         this.categorizedGames = games;
+        this.isLoadingGames = false;
       });
     } catch (error) {
       console.error(error)

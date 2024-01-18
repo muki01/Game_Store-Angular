@@ -24,6 +24,9 @@ export class GameDetailsComponent implements OnInit {
 
   errorMessage: string | null = null;
 
+  isLoadingGameData:boolean = true
+  isLoadingRandomGames:boolean = true
+
   constructor(private route: ActivatedRoute, private firestoreService: FirestoreService, private router: Router, private authService: AuthService) { }
 
 
@@ -49,6 +52,7 @@ export class GameDetailsComponent implements OnInit {
                 if( this.loggedUserData.role == "admin"){
                   this.isAdmin = true;
                 }
+                this.isLoadingGameData = false
               });
             }
           });
@@ -58,6 +62,7 @@ export class GameDetailsComponent implements OnInit {
 
     this.firestoreService.getRandomGames(3).then((randomGames: any) => {
       this.randomGames = randomGames;
+      this.isLoadingRandomGames = false;
     });
   }
 

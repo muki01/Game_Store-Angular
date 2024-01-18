@@ -2,23 +2,30 @@
 <main id="main">
   <div class="main-container">
     <div class="sideBar">
-      <div class="sideBar-container" *ngIf="profileData">
-        <img src="{{profileData.image}}" alt="">
-        <h1>{{ profileData.username }}</h1>
-        <h2>{{ profileData.email}}</h2>
-        <h3>Role: {{ profileData.role}}</h3>
-        <h2 *ngIf="isYourProfile == true">💵Balance: {{profileData.balance}}$</h2>
-        <p>{{profileData.title}}</p>
+      <div class="sideBar-container">
+        <ng-container *ngIf="isLoadingUserData">
+          <app-overlay-spinner></app-overlay-spinner>
+        </ng-container>
+        <ng-container *ngIf="!isLoadingUserData">
+          <ng-container *ngIf="profileData">
+            <img src="{{profileData.image}}" alt="">
+            <h1>{{ profileData.username }}</h1>
+            <h2>{{ profileData.email}}</h2>
+            <h3>Role: {{ profileData.role}}</h3>
+            <h2 *ngIf="isYourProfile == true">💵Balance: {{profileData.balance}}$</h2>
+            <p>{{profileData.title}}</p>
+          </ng-container>
+        </ng-container>
       </div>
     </div>
     <section>
       <div class="myGamesArea">
         <h1>Purchased Games</h1>
         <hr>
-        <ng-container *ngIf="isLoading">
-          <app-spinner></app-spinner>
+        <ng-container *ngIf="isLoadingGames">
+          <app-overlay-spinner></app-overlay-spinner>
         </ng-container>
-        <ng-container *ngIf="!isLoading">
+        <ng-container *ngIf="!isLoadingGames">
           <div class="postContainer" *ngIf="purchasedGames">
             <div class="post" *ngFor="let purchasedGames of purchasedGames">
               <a [routerLink]="['/game', purchasedGames.id]"><img src="{{purchasedGames.image}}"></a>
@@ -35,35 +42,41 @@
       <div class="settingsArea" *ngIf="isYourProfile == true">
         <h1>Settings</h1>
         <hr>
-        <div class="settings">
-          <form (ngSubmit)="saveSettings()" [formGroup]="editProfileForm" *ngIf="profileData">
-            <div class="row">
-              <h2>User name: </h2>
-              <input type="text" formControlName="username" name="username" required minlength="3">
-              <div class="validation"
-                *ngIf="editProfileForm.controls['username'].invalid && (editProfileForm.controls['username'].dirty || editProfileForm.controls['username'].touched)">
-                <div *ngIf="editProfileForm.controls['username'].hasError('required')">Username is required.</div>
-                <div *ngIf="editProfileForm.controls['username'].hasError('minlength')">Username must be at least 3
-                  characters.</div>
+        <ng-container *ngIf="isLoadingUserData">
+          <app-overlay-spinner></app-overlay-spinner>
+        </ng-container>
+        <ng-container *ngIf="!isLoadingUserData">
+          <div class="settings">
+            <form (ngSubmit)="saveSettings()" [formGroup]="editProfileForm" *ngIf="profileData">
+              <div class="row">
+                <h2>User name: </h2>
+                <input type="text" formControlName="username" name="username" required minlength="3">
+                <div class="validation"
+                  *ngIf="editProfileForm.controls['username'].invalid && (editProfileForm.controls['username'].dirty || editProfileForm.controls['username'].touched)">
+                  <div *ngIf="editProfileForm.controls['username'].hasError('required')">Username is required.</div>
+                  <div *ngIf="editProfileForm.controls['username'].hasError('minlength')">Username must be at least 3
+                    characters.</div>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <h2>Profile Photo: </h2>
-              <input type="text" formControlName="image" name="image" required pattern="^(https?:\/\/).*\.(jpg|png)$">
-              <div class="validation"
-                *ngIf="editProfileForm.controls['image'].invalid && (editProfileForm.controls['image'].dirty || editProfileForm.controls['image'].touched)">
-                <div *ngIf="editProfileForm.controls['image'].hasError('required')">Image URL is required.</div>
-                <div *ngIf="editProfileForm.controls['image'].hasError('pattern')">The URL must start with "http://" or
-                  "https://" and end with ".jpg" or ".png".</div>
+              <div class="row">
+                <h2>Profile Photo: </h2>
+                <input type="text" formControlName="image" name="image" required pattern="^(https?:\/\/).*\.(jpg|png)$">
+                <div class="validation"
+                  *ngIf="editProfileForm.controls['image'].invalid && (editProfileForm.controls['image'].dirty || editProfileForm.controls['image'].touched)">
+                  <div *ngIf="editProfileForm.controls['image'].hasError('required')">Image URL is required.</div>
+                  <div *ngIf="editProfileForm.controls['image'].hasError('pattern')">The URL must start with "http://"
+                    or
+                    "https://" and end with ".jpg" or ".png".</div>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <h2>Profile Title: </h2>
-              <textarea formControlName="title" name="title"></textarea>
-            </div>
-            <button class="submitBtn" type="submit">Save Changes</button>
-          </form>
-        </div>
+              <div class="row">
+                <h2>Profile Title: </h2>
+                <textarea formControlName="title" name="title"></textarea>
+              </div>
+              <button class="submitBtn" type="submit">Save Changes</button>
+            </form>
+          </div>
+        </ng-container>
       </div>
     </section>
   </div>

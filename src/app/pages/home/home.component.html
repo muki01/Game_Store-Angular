@@ -1,7 +1,12 @@
 <app-banner></app-banner>
 <main id="main">
   <div class="main-container">
-    <app-section [categorizedGames]="categorizedGames"></app-section>
+    <ng-container *ngIf="isLoadingGames">
+      <app-overlay-spinner></app-overlay-spinner>
+    </ng-container>
+    <ng-container *ngIf="!isLoadingGames">
+      <app-section [categorizedGames]="categorizedGames"></app-section>
+    </ng-container>
     <app-aside></app-aside>
   </div>
 </main>

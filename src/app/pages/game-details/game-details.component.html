@@ -2,62 +2,78 @@
 
 <main id="main">
   <div class="main-container">
-    <section *ngIf="currentGameData">
+    <section>
       <div class="postArea">
         <div class="container">
-          <div class="textArea">
-            <h1>{{currentGameData.name}}</h1>
-            <div class="options">
-              <ng-container *ngIf="isAdmin || isCreator">
-                <a (click)="editGame()"> <i class="fa-solid fa-pencil"></i> Edit </a>
-                <a (click)="deleteGame()"><i class="fa-solid fa-trash-can"></i> Remove </a>
-              </ng-container>
-              <ng-container *ngIf="!gameLiked ; else Liked">
-                <a (click)="likeGame()"><i class="fa-regular fa-heart"></i> Like </a>
-              </ng-container>
-              <ng-template #Liked>
-                <a (click)="likeGame()" class="liked"><i class="fa-solid fa-heart"></i> Liked </a>
-              </ng-template>
-            </div>
-          </div>
-          <hr>
-          <h2><i class="fas fa-user"></i><a [routerLink]="['/users/profile', currentGameData.creatorId]">
-              {{creatorUserData.username}}
-            </a><i class="far fa-clock"></i>
-            {{ currentGameData.date ? (currentGameData.date.toDate() | date:'MMMM, dd yyyy') : '' }}</h2>
-          <img src="{{currentGameData.image}}" alt="{{currentGameData.name}}">
-          <p>{{currentGameData.description}}</p>
-          <div class="btnArea" *ngIf="loggedUserData">
-            <a *ngIf="!gamePurchased" (click)="buyGame()" class="btn"><i class="fa-regular fa-credit-card"></i>
-              {{currentGameData.price}}$ Buy
-              Now</a>
-            <div class="downloadArea" *ngIf="gamePurchased">
-              <h2>You purchased this game!</h2>
-              <a href="{{currentGameData.downloadURL}}" target="_blank" class="btn"><i class="fa-solid fa-download"></i>
-                Download</a>
-            </div>
-          </div>
+          <ng-container *ngIf="isLoadingGameData">
+            <app-overlay-spinner></app-overlay-spinner>
+          </ng-container>
+          <ng-container *ngIf="!isLoadingGameData">
+            <ng-container *ngIf="currentGameData">
+              <div class="textArea">
+                <h1>{{currentGameData.name}}</h1>
+                <div class="options">
+                  <ng-container *ngIf="isAdmin || isCreator">
+                    <a (click)="editGame()"> <i class="fa-solid fa-pencil"></i> Edit </a>
+                    <a (click)="deleteGame()"><i class="fa-solid fa-trash-can"></i> Remove </a>
+                  </ng-container>
+                  <ng-container *ngIf="!gameLiked ; else Liked">
+                    <a (click)="likeGame()"><i class="fa-regular fa-heart"></i> Like </a>
+                  </ng-container>
+                  <ng-template #Liked>
+                    <a (click)="likeGame()" class="liked"><i class="fa-solid fa-heart"></i> Liked </a>
+                  </ng-template>
+                </div>
+              </div>
+              <hr>
+              <h2><i class="fas fa-user"></i><a [routerLink]="['/users/profile', currentGameData.creatorId]">
+                  {{creatorUserData.username}}
+                </a><i class="far fa-clock"></i>
+                {{ currentGameData.date ? (currentGameData.date.toDate() | date:'MMMM, dd yyyy') : '' }}</h2>
+              <img src="{{currentGameData.image}}" alt="{{currentGameData.name}}">
+              <p>{{currentGameData.description}}</p>
+              <div class="btnArea" *ngIf="loggedUserData">
+                <a *ngIf="!gamePurchased" (click)="buyGame()" class="btn"><i class="fa-regular fa-credit-card"></i>
+                  {{currentGameData.price}}$ Buy
+                  Now</a>
+                <div class="downloadArea" *ngIf="gamePurchased">
+                  <h2>You purchased this game!</h2>
+                  <a href="{{currentGameData.downloadURL}}" target="_blank" class="btn"><i
+                      class="fa-solid fa-download"></i>
+                    Download</a>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!currentGameData">
+              <h1>Not Found</h1>
+            </ng-container>
+          </ng-container>
         </div>
       </div>
       <div class="moreGamesArea">
         <div class="container">
           <h1>You may like these posts</h1>
           <hr>
-          <div class="postContainer">
-            <ng-container *ngIf="randomGames.length > 0; else noGames">
-              <div class="post" *ngFor="let randomGames of randomGames">
-                <a [routerLink]="['/game', randomGames.id]"><img src="{{randomGames.image}}"></a>
-                <a [routerLink]="['/game', randomGames.id]">
-                  <h2>{{randomGames.name}}</h2>
-                </a>
-              </div>
-            </ng-container>
-            <ng-template #noGames>
-              <div class="noGames">
-                <h2>No Games yet.</h2>
-              </div>
-            </ng-template>
-          </div>
+          <ng-container *ngIf="isLoadingRandomGames">
+            <app-overlay-spinner></app-overlay-spinner>
+          </ng-container>
+          <ng-container *ngIf="!isLoadingRandomGames">
+            <div class="postContainer">
+              <ng-container *ngIf="randomGames.length > 0; else noGames">
+                <div class="post" *ngFor="let randomGames of randomGames">
+                  <a [routerLink]="['/game', randomGames.id]"><img src="{{randomGames.image}}"></a>
+                  <a [routerLink]="['/game', randomGames.id]">
+                    <h2>{{randomGames.name}}</h2>
+                  </a>
+                </div>
+              </ng-container>
+              <ng-template #noGames>
+                <div class="noGames">
+                  <h2>No Games yet.</h2>
+                </div>
+              </ng-template>
+            </div>
+          </ng-container>
         </div>
       </div>
       <!-- <div class="commentsArea">

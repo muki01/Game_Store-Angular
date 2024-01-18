@@ -16,6 +16,8 @@ export class CreateComponent implements OnInit {
   createForm: FormGroup;
   errorMessage: string | null = null;
 
+  isLoading:boolean = false;
+
   constructor(private formBuilder: FormBuilder, private firestoreService: FirestoreService, private router: Router, private authService: AuthService) {
     this.createForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -34,6 +36,7 @@ export class CreateComponent implements OnInit {
   }
 
   async createGame() {
+    this.isLoading = true;
     const newGame: any = {
       name: '',
       category: '',

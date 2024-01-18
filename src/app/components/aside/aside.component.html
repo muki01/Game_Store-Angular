@@ -27,35 +27,48 @@
     <div class="container">
       <h1>Popular Games</h1>
       <hr>
-      <ng-container *ngIf="popularGames.length > 0">
-        <div *ngFor="let game of popularGames" class="post">
-          <a [routerLink]="['/game', game.id]"><img src="{{ game.image }}"></a>
-          <a [routerLink]="['/game', game.id]">
-            <h2>{{ game.name }}</h2>
-          </a>
+      <ng-container *ngIf="isLoadingGames">
+        <app-overlay-spinner></app-overlay-spinner>
+      </ng-container>
+      <ng-container *ngIf="!isLoadingGames">
+        <ng-container *ngIf="popularGames.length > 0">
+          <div *ngFor="let game of popularGames" class="post">
+            <a [routerLink]="['/game', game.id]"><img src="{{ game.image }}"></a>
+            <a [routerLink]="['/game', game.id]">
+              <h2>{{ game.name }}</h2>
+            </a>
+          </div>
+        </ng-container>
+
+        <div class="noGames" *ngIf="popularGames.length === 0">
+          <h2>No Games yet.</h2>
         </div>
       </ng-container>
-
-      <div class="noGames" *ngIf="popularGames.length === 0">
-        <h2>No Games yet.</h2>
-      </div>
     </div>
   </div>
   <div class="box aboutMe">
     <div class="container">
       <h1>Your Profile</h1>
       <hr>
-      <div class="post" *ngIf="isLoggedIn">
-        <a [routerLink]="['/users/profile', loggedUserData.id]"><img src="{{loggedUserData.image}}"></a>
-        <div class="textArea">
-          <a [routerLink]="['/users/profile', loggedUserData.id]">
-            <h2>{{loggedUserData.username}}</h2>
-          </a>
-          <a [routerLink]="['/users/profile', loggedUserData.id]">
-            <h3>View complete profile</h3>
-          </a>
-        </div>
-      </div>
+
+      <ng-container *ngIf="isLoggedIn">
+        <ng-container *ngIf="isLoadingUserData">
+          <app-overlay-spinner></app-overlay-spinner>
+        </ng-container>
+        <ng-container *ngIf="!isLoadingUserData">
+          <div class="post">
+            <a [routerLink]="['/users/profile', loggedUserData.id]"><img src="{{loggedUserData.image}}"></a>
+            <div class="textArea">
+              <a [routerLink]="['/users/profile', loggedUserData.id]">
+                <h2>{{loggedUserData.username}}</h2>
+              </a>
+              <a [routerLink]="['/users/profile', loggedUserData.id]">
+                <h3>View complete profile</h3>
+              </a>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
       <div class="notLoggedin" *ngIf="!isLoggedIn">
         <h2>Not Logged In</h2>
       </div>

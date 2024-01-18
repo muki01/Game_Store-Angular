@@ -11,6 +11,8 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string | null = null;
 
+  isLoading:boolean = false
+
   constructor(private formBuilder: FormBuilder, private authService: AuthService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -26,6 +28,7 @@ export class LoginComponent {
   login() {
     if (this.loginForm.valid) {
       const formData = this.loginForm.value;
+      this.isLoading = true;
       this.authService.signIn(formData.email, formData.password);
     } else {
       this.showErrorMessage("Fill in the Data Correctly");

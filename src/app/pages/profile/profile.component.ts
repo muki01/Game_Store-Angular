@@ -14,7 +14,8 @@ export class ProfileComponent implements OnInit {
   purchasedGames: any = [];
   isYourProfile: boolean = false;
 
-  isLoading: boolean = true;
+  isLoadingGames: boolean = true;
+  isLoadingUserData: boolean = true;
 
   editProfileForm: FormGroup;
   errorMessage: string | null = null;
@@ -41,10 +42,11 @@ export class ProfileComponent implements OnInit {
         this.firestoreService.getUserById(profileId).then((userData: any) => {
           this.profileData = { id: profileId, ...userData };
           this.updateFormValues();
+          this.isLoadingUserData = false
         });
         this.firestoreService.getPurchasedGames(profileId).then((games: any) => {
           this.purchasedGames = games;
-          this.isLoading = false;
+          this.isLoadingGames = false;
         });
       }
     });
@@ -69,6 +71,10 @@ export class ProfileComponent implements OnInit {
       newProfileData.username = formData.username
       newProfileData.image = formData.image
       newProfileData.title = formData.title
+
+      this.profileData.username = formData.username
+      this.profileData.image = formData.image
+      this.profileData.title = formData.title
 
       await this.firestoreService.updateUser(newProfileData, this.profileData.id);
     } else {

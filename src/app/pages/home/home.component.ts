@@ -8,6 +8,7 @@ import { FirestoreService } from '../../services/firestore.service';
 })
 export class HomeComponent implements OnInit {
   categorizedGames: any[] = [];
+  isLoadingGames:boolean = true;
 
   constructor(private firestoreService: FirestoreService) { }
 
@@ -17,7 +18,10 @@ export class HomeComponent implements OnInit {
 
   async fetchGames() {
     try {
-      this.categorizedGames = await this.firestoreService.getGames();
+      await this.firestoreService.getGames().then((games: any) => {
+        this.categorizedGames = games;
+        this.isLoadingGames = false;
+      });
     } catch (error) {
       console.error(error)
     }
