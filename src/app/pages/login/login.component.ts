@@ -11,7 +11,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string | null = null;
 
-  isLoading:boolean = false
+  isLoading: boolean = false
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) {
     this.loginForm = this.formBuilder.group({
@@ -19,7 +19,7 @@ export class LoginComponent {
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
 
-    this.authService.errorMessage$.subscribe((errorMessage) => {
+    this.authService.errorMessage$.subscribe((errorMessage: any) => {
       this.showErrorMessage(errorMessage);
     });
 

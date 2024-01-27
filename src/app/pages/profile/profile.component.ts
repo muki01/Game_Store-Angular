@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       const profileId = params.get('userId');
       if (profileId) {
-        this.authService.loggedUser$.subscribe(user => {
+        this.authService.loggedUser$.subscribe((user: any) => {
           const loggedUserId = user?.uid;
           if (loggedUserId) {
             this.isYourProfile = !!(profileId == loggedUserId);

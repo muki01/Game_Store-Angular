@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FirestoreService } from '../../services/firestore.service';
-import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -16,16 +15,16 @@ export class GameDetailsComponent implements OnInit {
   gamePurchased: boolean = false;
   gameLiked: boolean = false;
 
-  isAdmin:boolean = false;
-  isCreator:boolean = false;
+  isAdmin: boolean = false;
+  isCreator: boolean = false;
 
   creatorUserData: any = {};
   loggedUserData: any = {};
 
   errorMessage: string | null = null;
 
-  isLoadingGameData:boolean = true
-  isLoadingRandomGames:boolean = true
+  isLoadingGameData: boolean = true
+  isLoadingRandomGames: boolean = true
 
   constructor(private route: ActivatedRoute, private firestoreService: FirestoreService, private router: Router, private authService: AuthService) { }
 
@@ -39,17 +38,17 @@ export class GameDetailsComponent implements OnInit {
           this.firestoreService.getUserById(this.currentGameData.creatorId).then((userData: any) => {
             this.creatorUserData = userData;
           });
-          this.authService.loggedUser$.subscribe(user => {
+          this.authService.loggedUser$.subscribe((user: any) => {
             const userId = user?.uid
             if (userId) {
               this.firestoreService.getUserById(userId).then((userData: any) => {
                 this.loggedUserData = { id: userId, ...userData };
                 this.gamePurchased = !!this.loggedUserData.purchasedGames.includes(this.currentGameData.id)
                 this.gameLiked = !!this.loggedUserData.likedGames.includes(this.currentGameData.id)
-                if( this.loggedUserData.id == this.currentGameData.creatorId){
+                if (this.loggedUserData.id == this.currentGameData.creatorId) {
                   this.isCreator = true;
                 }
-                if( this.loggedUserData.role == "admin"){
+                if (this.loggedUserData.role == "admin") {
                   this.isAdmin = true;
                 }
                 this.isLoadingGameData = false

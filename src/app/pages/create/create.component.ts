@@ -16,7 +16,7 @@ export class CreateComponent implements OnInit {
   createForm: FormGroup;
   errorMessage: string | null = null;
 
-  isLoading:boolean = false;
+  isLoading: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private firestoreService: FirestoreService, private router: Router, private authService: AuthService) {
     this.createForm = this.formBuilder.group({
@@ -30,7 +30,7 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.loggedUser$.subscribe(user => {
+    this.authService.loggedUser$.subscribe((user: any) => {
       this.loggedUserId = user?.uid
     });
   }

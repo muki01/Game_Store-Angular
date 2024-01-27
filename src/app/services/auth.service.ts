@@ -12,7 +12,7 @@ export class AuthService {
   loggedUser$: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
   constructor(private auth: Auth, private firestore: Firestore, private router: Router) {
-    authState(this.auth).subscribe(user => {
+    authState(this.auth).subscribe((user: any) => {
       this.loggedUser$.next(user);
     });
   }

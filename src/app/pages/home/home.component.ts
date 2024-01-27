@@ -8,7 +8,7 @@ import { FirestoreService } from '../../services/firestore.service';
 })
 export class HomeComponent implements OnInit {
   categorizedGames: any[] = [];
-  isLoadingGames:boolean = true;
+  isLoadingGames: boolean = true;
 
   constructor(private firestoreService: FirestoreService) { }
 

@@ -11,7 +11,7 @@ export class RegisterComponent {
   registerForm: FormGroup;
   errorMessage: string | null = null;
 
-  isLoading:boolean = false
+  isLoading: boolean = false
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService) {
     this.registerForm = this.formBuilder.group({
@@ -21,7 +21,7 @@ export class RegisterComponent {
       repassword: ['', [Validators.required, Validators.minLength(6)]],
     });
 
-    this.authService.errorMessage$.subscribe((errorMessage) => {
+    this.authService.errorMessage$.subscribe((errorMessage: any) => {
       this.showErrorMessage(errorMessage);
     });
   }
