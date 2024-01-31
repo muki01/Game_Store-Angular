@@ -5,48 +5,84 @@ const gameManager = require("../managers/gameManager");
 // const { getErrorMessage } = require("../utils/errorHelpers");
 
 router.get("/", async (req, res) => {
-    const games = await gameManager.getAll().lean();
-    res.json(games);
+    try {
+        const games = await gameManager.getAllGames().lean();
+        res.status(200).json(games);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 router.get("/action", async (req, res) => {
-    const games = await gameManager.getAllByCategory("action").lean();
-    res.json(games);
+    try {
+        const games = await gameManager.getGamesByCategory("action").lean();
+        res.status(200).json(games);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 router.get("/adventure", async (req, res) => {
-    const games = await gameManager.getAllByCategory("adventure").lean();
-    res.json(games);
+    try {
+        const games = await gameManager.getGamesByCategory("adventure").lean();
+        res.status(200).json(games);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 router.get("/simulation", async (req, res) => {
-    const games = await gameManager.getAllByCategory("simulation").lean();
-    res.json(games);
+    try {
+        const games = await gameManager.getGamesByCategory("simulation").lean();
+        res.status(200).json(games);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 router.get("/survival", async (req, res) => {
-    const games = await gameManager.getAllByCategory("survival").lean();
-    res.json(games);
+    try {
+        const games = await gameManager.getGamesByCategory("survival").lean();
+        res.status(200).json(games);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 router.get("/sports", async (req, res) => {
-    const games = await gameManager.getAllByCategory("sports").lean();
-    res.json(games);
+    try {
+        const games = await gameManager.getGamesByCategory("sports").lean();
+        res.status(200).json(games);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 router.get("/racing", async (req, res) => {
-    const games = await gameManager.getAllByCategory("racing").lean();
-    res.json(games);
+    try {
+        const games = await gameManager.getGamesByCategory("racing").lean();
+        res.status(200).json(games);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 router.get("/horror", async (req, res) => {
-    const games = await gameManager.getAllByCategory("horror").lean();
-    res.json(games);
+    try {
+        const games = await gameManager.getGamesByCategory("horror").lean();
+        res.status(200).json(games);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 router.get("/popular", async (req, res) => {
-    const popularGames = await gameManager.getAllPopularGames().lean();
-    res.json(popularGames);
+    try {
+        const popularGames = await gameManager.getPopularGames().lean();
+        res.status(200).json(popularGames);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 router.post("/create", async (req, res) => {
@@ -54,8 +90,8 @@ router.post("/create", async (req, res) => {
     console.log(gameData);
 
     try {
-        await gameManager.create(gameData);
-        res.json({ status: "Game created successfully" });
+        await gameManager.createGame(gameData);
+        res.status(201).json({ status: "Game created successfully" });
     } catch (err) {
         res.status(500).json({ error: "Game create error" });
     }
@@ -63,23 +99,35 @@ router.post("/create", async (req, res) => {
 
 router.get("/:gameId/details", async (req, res) => {
     const gameId = req.params.gameId;
-    const game = await gameManager.getOne(gameId).lean();
-    res.json(game);
+    try {
+        const game = await gameManager.getGameById(gameId).lean();
+        if (game) {
+            res.status(200).json(game);
+        } else {
+            res.status(404).json({ error: "Game not found" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 router.get("/:gameId/delete", async (req, res) => {
     const gameId = req.params.gameId;
     try {
-        await gameManager.delete(gameId);
-        res.json({ status: "Game deleted successfully" });
+        await gameManager.deleteGame(gameId);
+        res.status(200).json({ status: "Game deleted successfully" });
     } catch (err) {
         res.status(500).json({ error: "Game delete error" });
     }
 });
 
 router.get("/:gameId/edit", async (req, res) => {
-    const game = await gameManager.getOne(req.params.gameId).lean();
-    res.json({ game });
+    try {
+        const game = await gameManager.getGameById(req.params.gameId).lean();
+        res.status(200).json(game);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
 
 router.post("/:gameId/edit", async (req, res) => {
@@ -87,24 +135,24 @@ router.post("/:gameId/edit", async (req, res) => {
     const gameData = req.body;
 
     try {
-        await gameManager.edit(gameId, gameData);
-        // res.redirect(`/games/${gameId}/details`);
-    } catch (err) {
-        res.json({ status: "Game deleted successfully" });
-        // res.render("games/edit", {
-        //     error: "Unable to update game",
-        //     ...gameData,
-        // });
+        const updatedGame = await gameManager.editGame(gameId, gameData);
+        if (updatedGame) {
+            res.status(200).json({ status: "Game edited successfully" });
+        } else {
+            res.status(404).json({ error: "Game not found" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
-router.post("/:gameId/comments", async (req, res) => {
-    const gameId = req.params.gameId;
-    const { message } = req.body;
-    const user = req.user._id;
+// router.post("/:gameId/comments", async (req, res) => {
+//     const gameId = req.params.gameId;
+//     const { message } = req.body;
+//     const user = req.user._id;
 
-    await gameManager.addComment(gameId, { user, message });
-    // res.redirect(`/games/${gameId}/details`);
-});
+//     await gameManager.addComment(gameId, { user, message });
+//     // res.redirect(`/games/${gameId}/details`);
+// });
 
 module.exports = router;
