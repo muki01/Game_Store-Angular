@@ -76,16 +76,20 @@ export class AuthService {
       if (error.code === 'auth/user-not-found') {
         console.log('User not found. Please check your email.');
         this.errorMessage$.next('User not found. Please check your email.');
-        this.errorMessage$.next(null)
       } else if (error.code === 'auth/wrong-password') {
         console.log('Incorrect password. Please check your password.');
         this.errorMessage$.next('Incorrect password. Please check your password.');
-        this.errorMessage$.next(null)
+      } else if (error.code === "auth/invalid-credential") {
+        console.log('Invalid credentials. Please check your email and password.');
+        this.errorMessage$.next('Invalid credentials. Please check your email and password.');
+      } else if (error.code === "auth/too-many-requests") {
+        console.log('Too many login attempts. Please try again later.');
+        this.errorMessage$.next('Too many login attempts. Please try again later.');
       } else {
         console.error('An error occurred during login.', error);
         this.errorMessage$.next('An error occurred during login.');
-        this.errorMessage$.next(null)
       }
+      this.errorMessage$.next(null)
       return;
     }
   }

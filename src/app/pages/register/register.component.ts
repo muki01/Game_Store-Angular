@@ -42,6 +42,7 @@ export class RegisterComponent {
 
 
   private showErrorMessage(message: string | null) {
+    this.isLoading = false;
     if (message !== null) {
       this.errorMessage = message;
       setTimeout(() => {
