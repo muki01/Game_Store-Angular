@@ -41,6 +41,8 @@ export class HeaderComponent {
 
   navToggle() {
     const navBar = document.querySelector('.navBar') as HTMLElement;
+    const menuBtn = document.querySelector('.menuBtn') as HTMLElement;
+    menuBtn.classList.toggle('openmenu');
     navBar.classList.toggle('open');
     if (navBar.classList.contains('open')) {
       navBar.style.maxHeight = navBar.scrollHeight + 'px';
@@ -51,6 +53,8 @@ export class HeaderComponent {
 
   navCloser() {
     const navBar = document.querySelector('.navBar') as HTMLElement;
+    const menuBtn = document.querySelector('.menuBtn') as HTMLElement;
+    menuBtn.classList.remove('openmenu');
     navBar.classList.remove('open');
     navBar.removeAttribute('style');
   }
