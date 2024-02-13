@@ -12,18 +12,20 @@
             <ng-container *ngIf="currentGameData">
               <div class="textArea">
                 <h1>{{currentGameData.name}}</h1>
-                <div class="options">
-                  <ng-container *ngIf="isAdmin || isCreator">
-                    <a (click)="editGame()"> <i class="fa-solid fa-pencil"></i> Edit </a>
-                    <a (click)="deleteGame()"><i class="fa-solid fa-trash-can"></i> Remove </a>
-                  </ng-container>
-                  <ng-container *ngIf="!gameLiked ; else Liked">
-                    <a (click)="likeGame()"><i class="fa-regular fa-heart"></i> Like </a>
-                  </ng-container>
-                  <ng-template #Liked>
-                    <a (click)="likeGame()" class="liked"><i class="fa-solid fa-heart"></i> Liked </a>
-                  </ng-template>
-                </div>
+                <ng-container *ngIf="loggedUserData">
+                  <div class="options">
+                    <ng-container *ngIf="isAdmin || isCreator">
+                      <a (click)="editGame()"> <i class="fa-solid fa-pencil"></i> Edit </a>
+                      <a (click)="deleteGame()"><i class="fa-solid fa-trash-can"></i> Remove </a>
+                    </ng-container>
+                    <ng-container *ngIf="!gameLiked ; else Liked">
+                      <a (click)="likeGame()"><i class="fa-regular fa-heart"></i> Like </a>
+                    </ng-container>
+                    <ng-template #Liked>
+                      <a (click)="likeGame()" class="liked"><i class="fa-solid fa-heart"></i> Liked </a>
+                    </ng-template>
+                  </div>
+                </ng-container>
               </div>
               <hr>
               <h2><i class="fas fa-user"></i><a [routerLink]="['/users/profile', currentGameData.creatorId]">

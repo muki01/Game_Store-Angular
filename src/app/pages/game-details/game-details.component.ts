@@ -19,7 +19,7 @@ export class GameDetailsComponent implements OnInit {
   isCreator: boolean = false;
 
   creatorUserData: any = {};
-  loggedUserData: any = {};
+  loggedUserData: any = null;
 
   errorMessage: string | null = null;
 
@@ -35,6 +35,9 @@ export class GameDetailsComponent implements OnInit {
       if (gameId) {
         this.firestoreService.getGameById(gameId).then((gameData: any) => {
           this.currentGameData = { id: gameId, ...gameData };
+          if (this.currentGameData) {
+            this.isLoadingGameData = false
+          }
           this.firestoreService.getUserById(this.currentGameData.creatorId).then((userData: any) => {
             this.creatorUserData = userData;
           });
@@ -51,7 +54,6 @@ export class GameDetailsComponent implements OnInit {
                 if (this.loggedUserData.role == "admin") {
                   this.isAdmin = true;
                 }
-                this.isLoadingGameData = false
               });
             }
           });

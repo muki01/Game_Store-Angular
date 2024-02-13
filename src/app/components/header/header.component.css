@@ -6,7 +6,6 @@ header {
   box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.3);
   z-index: 1;
 }
-
 header .container {
   width: 90%;
   margin: auto;
@@ -66,13 +65,12 @@ header .menuArea {
   display: none;
 }
 
-header .menuArea .menuBtn {
+header .menuArea .menuBtn{
   position: relative;
   width: 35px;
   height: 35px;
   cursor: pointer;
 }
-
 header .menuArea .menuBtn span {
   background-color: black;
   width: 100%;
@@ -85,63 +83,60 @@ header .menuArea .menuBtn span {
   transform: translate(-50%, -50%);
 }
 
-header .menuArea .menuBtn .line-1 {
+header .menuArea .menuBtn .line-1{
   transform: translate(-50%, -13px);
 }
 
-header .menuArea .menuBtn .line-3 {
+header .menuArea .menuBtn .line-3{
   transform: translate(-50%, 8px);
 }
 
-header .menuArea .menuBtn.openmenu .line-1 {
+header .menuArea .menuBtn.openmenu .line-1{
   transform: translate(-50%, -50%) rotate(-45deg);
 }
-
-header .menuArea .menuBtn.openmenu .line-3 {
+header .menuArea .menuBtn.openmenu .line-3{
   transform: translate(-50%, -50%) rotate(45deg);
 }
-
-header .menuArea .menuBtn.openmenu .line-2 {
+header .menuArea .menuBtn.openmenu .line-2{
   width: 0;
 }
 
 @media screen and (max-width: 1120px) {
   header .menuArea {
-    display: block;
+      display: block;
   }
 
   header .logoArea .image {
-    display: none;
+      display: none;
   }
 
   header .logoArea .siteName {
-    display: block;
-    width: 220px;
+      display: block;
+      width: 220px;
   }
 
   header .navBar {
-    width: 100%;
-    background-color: #1f2024;
-    max-height: 0px;
-    overflow: hidden;
-    visibility: hidden;
-    transition: all 0.5s ease;
+      width: 100%;
+      background-color: #1f2024;
+      max-height: 0px;
+      overflow: hidden;
+      visibility: hidden;
+      transition: all 0.5s ease;
   }
 
   header .navBar.open {
-    visibility: visible;
+      visibility: visible;
   }
 
   header .navBar ul {
-    padding: 0 30px;
+      padding: 0 30px;
   }
 
   header .navBar ul li {
-    display: block;
-    margin: 15px 0;
+      display: block;
+      margin: 15px 0;
   }
-
   header .navBar ul li a {
-    color: #fff;
+      color: #fff;
   }
 }
